@@ -1,15 +1,20 @@
 ﻿using UnityEngine;
 
-public class GameCell : MonoBehaviour {
-
+public class GameCell : MonoBehaviour
+{
     #region Variables and Properties
 
     public HexCell underlyingHexCell;
 
-    public int Elevation {
+    public GameCellProperties gcp;
+
+    public int Elevation
+    {
         get { return underlyingHexCell.Elevation; }
-        set {
-            if (underlyingHexCell.Elevation == value) {
+        set
+        {
+            if (underlyingHexCell.Elevation == value)
+            {
                 return;
             }
 
@@ -17,17 +22,22 @@ public class GameCell : MonoBehaviour {
             underlyingHexCell.Elevation = value;
         }
     }
-    public bool IsUnderwater {
+    public bool IsUnderwater
+    {
         get { return underlyingHexCell.IsUnderwater; }
     }
-    public bool HasRiver {
+    public bool HasRiver
+    {
         get { return underlyingHexCell.HasRiver; }
     }
-    public bool HasRoads {
+    public bool HasRoads
+    {
         get { return underlyingHexCell.HasRoads; }
     }
-    public HexCoordinates Coordinates {
-        get {
+    public HexCoordinates Coordinates
+    {
+        get
+        {
             return underlyingHexCell.coordinates;
         }
     }
@@ -35,14 +45,19 @@ public class GameCell : MonoBehaviour {
     #endregion
 
     // Use this for initialization
-    void Start() {
-        if (underlyingHexCell == null) {
+    void Start()
+    {
+        if (underlyingHexCell == null)
+        {
             underlyingHexCell = gameObject.GetComponent<HexCell>();
+        }
+        if (gcp == null)
+        {
+            gcp = gameObject.GetComponent<GameCellProperties>();
         }
     }
 
     // Update is called once per frame
     void Update() { }
-
 
 }
