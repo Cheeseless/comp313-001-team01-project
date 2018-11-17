@@ -90,6 +90,13 @@ public class SaveLoadMenu : MonoBehaviour {
 		return Path.Combine(Application.persistentDataPath, mapName + ".map");
 	}
 
+    static string GetSelectedPath(string name) {
+        if (name.Length == 0) {
+            return null;
+        }
+        return Path.Combine(Application.persistentDataPath, name + ".map");
+    }
+
 	void Save (string path) {
 		using (
 			BinaryWriter writer =
@@ -100,20 +107,39 @@ public class SaveLoadMenu : MonoBehaviour {
 		}
 	}
 
-	void Load (string path) {
-		if (!File.Exists(path)) {
-			Debug.LogError("File does not exist " + path);
-			return;
-		}
-		using (BinaryReader reader = new BinaryReader(File.OpenRead(path))) {
-			int header = reader.ReadInt32();
-			if (header <= 2) {
-				hexGrid.Load(reader, header);
-				HexMapCamera.ValidatePosition();
-			}
-			else {
-				Debug.LogWarning("Unknown map format " + header);
-			}
-		}
-	}
+    void Load (string path) {
+        if (!File.Exists(path)) {
+            Debug.LogError("File does not exist " + path);
+            return;
+        }
+        using (BinaryReader reader = new BinaryReader(File.OpenRead(path))) {
+            int header = reader.ReadInt32();
+            if (header <= 2) {
+                hexGrid.Load(reader, header);
+                HexMapCamera.ValidatePosition();
+            }
+            else {
+                Debug.LogWarning("Unknown map format " + header);
+            }
+        }
+    }
+    public static void Load (string name, HexGrid hexGrid) {
+        string path = GetSelectedPath(name);
+        if (!File.Exists(path)) {
+            Debug.LogError("File does not exist " + path);
+            return;
+        }
+        using (BinaryReader reader = new BinaryReader(File.OpenRead(path))) {
+            int header = reader.ReadInt32();
+            if (header <= 2) {
+                hexGrid.Load(reader, header);
+                HexMapCamera.ValidatePosition();
+            }
+            else {
+                Debug.LogWarning("Unknown map format " + header);
+            }
+        }
+    }
+
+   
 }

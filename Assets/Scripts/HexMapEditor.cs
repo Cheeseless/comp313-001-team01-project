@@ -3,8 +3,6 @@ using UnityEngine.EventSystems;
 
 public class HexMapEditor : MonoBehaviour {
 
-    #region Variables and Properties
-
     int activeElevation;
 
     int activeTerrainTypeIndex;
@@ -21,20 +19,19 @@ public class HexMapEditor : MonoBehaviour {
     HexDirection dragDirection;
 
     public HexGrid hexGrid;
+    public GameManager gameManager;
 
     bool isDrag;
 
-    int owner;
+    Player owner;
     HexCell previousCell;
 
     OptionalToggle riverMode, roadMode, walledMode;
 
     public Material terrainMaterial;
 
-    #endregion
-
     public void SetOwner(int index) {
-        owner = index;
+        owner = gameManager.GetPlayer(index);
     }
 
     public void SetTerrainTypeIndex(int index) {

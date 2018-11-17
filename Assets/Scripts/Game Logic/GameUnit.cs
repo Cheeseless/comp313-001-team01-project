@@ -56,7 +56,7 @@ public class GameUnit : HexUnit {
             }
         }
     }
-    public int Owner {
+    public Player Owner {
         get { return owner; }
         set {
             owner = value; 
