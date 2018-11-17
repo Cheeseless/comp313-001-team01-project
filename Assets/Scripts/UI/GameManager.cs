@@ -13,6 +13,10 @@ public class GameManager : MonoBehaviour {
 
     [SerializeField] int numberOfPlayers;
 
+    List<Player> players;
+
+    Player currentPlayer;
+
     GameUnit selectedUnit;
 
     int turn;
@@ -27,11 +31,32 @@ public class GameManager : MonoBehaviour {
 
     public void EndTurn() {
         turn +=1;
-        turnText.text = "Turn: " + Mathf.FloorToInt(turn /numberOfPlayers) +1;
-        playerText.text = "Player: " + ((turn % numberOfPlayers)+1);
+        turnText.text = "Turn: " + turn;
+        playerText.text = "Player: " + (players.IndexOf(currentPlayer)+1);
+        SetNextPlayer();
+    }
+
+    void SetNextPlayer() {
+        if (players.IndexOf(currentPlayer) == players.Count) {
+            currentPlayer = players[0];
+        }
+        else {
+            currentPlayer = players[players.IndexOf(currentPlayer) + 1];
+        }
+    }
+
+    public Player GetPlayer(int index) {
+        return players[index];
+    } 
+    public int GetPlayerIndex(Player player) {
+        return players.IndexOf(player);
     }
 
     void Start() {
+
+        for (int i = 0; i < numberOfPlayers; i++) {
+            players.Add(new Player());
+        }
         turn = 0;
         turnText.text = "Turn: " + (turn +1);
         playerText.text = "Player: " + ((turn % numberOfPlayers)+1);
@@ -49,7 +74,7 @@ public class GameManager : MonoBehaviour {
                 DoSelection();
             }
 
-            if (selectedUnit && selectedUnit.Owner == turn % numberOfPlayers) {
+            if (selectedUnit && selectedUnit.Owner == currentPlayer) {
                 if (Input.GetMouseButtonDown(1)) {
                     Debug.Log("Right click");
                     HandleOrder();
