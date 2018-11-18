@@ -53,11 +53,9 @@ public class HexGrid : MonoBehaviour {
     }
 
     public void AddUnit(HexUnit unit, HexCell location, float orientation) {
-        Debug.Log(unit);
 
         units.Add(unit);
         unit.transform.SetParent(transform, false);
-        Debug.Log(location == null);
         unit.Location = location;
         unit.Orientation = orientation;
     }
