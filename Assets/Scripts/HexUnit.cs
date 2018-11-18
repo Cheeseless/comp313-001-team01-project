@@ -27,6 +27,7 @@ public class HexUnit : MonoBehaviour {
                 location.Unit = null;
             }
             location = value;
+            Debug.Log(value);
             value.Unit = this;
             transform.localPosition = value.Position;
         }
@@ -152,17 +153,23 @@ public class HexUnit : MonoBehaviour {
     public void Save(BinaryWriter writer) {
         location.coordinates.Save(writer);
         writer.Write(orientation);
+        GameUnit.Save(writer);
+
     }
 
     public static void Load(BinaryReader reader, HexGrid grid) {
         HexCoordinates coordinates = HexCoordinates.Load(reader);
         float orientation = reader.ReadSingle();
         HexUnit unit = Instantiate(unitPrefab);
+        unit.GameUnit.Load(reader);
         grid.AddUnit(
             unit, grid.GetCell(coordinates), orientation
         );
     }
 
+    void Awake() {
+        GameUnit = GetComponent<GameUnit>();
+    }
     void OnEnable() {
         if (location) {
             transform.localPosition = location.Position;

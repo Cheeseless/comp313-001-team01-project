@@ -283,19 +283,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1084dd5421e49a14d8172acd167087e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114254065505649676
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1222299202177886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 434bba114c5e84a0f8fb19ef55b2766a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  traveled: 0
-  movementRange: 0
 --- !u!114 &114299473375021996
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -394,8 +381,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 434bba114c5e84a0f8fb19ef55b2766a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  traveled: 0
   movementRange: 0
+  traveled: 0
 --- !u!114 &114639629741224272
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -467,7 +454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1664e0ec84c7486a8e09180c0c4ee1ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
+  maxHealth: 15
   damage: 5
   movementRange: 16
   owner: 0
