@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 #endregion
 
-public class GameManager : MonoBehaviour {
+public class GameController : MonoBehaviour {
 
     HexCell currentCell;
     public HexGrid grid;
@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour {
             List<HexCell> path = grid.GetPath();
             if (currentCell) {
                 Debug.Log("Attack Order");
-                selectedUnit.AttackOrder(currentCell.Unit, path);
+                selectedUnit.AttackOrder(currentCell.Unit.GameUnit, path);
             }
             grid.ClearPath();
         }
@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour {
         grid.ClearPath();
         UpdateCurrentCell();
         if (currentCell) {
-            selectedUnit = currentCell.Unit;
+            selectedUnit = currentCell.Unit.GameUnit;
         }
     }
 

@@ -19,7 +19,7 @@ public class HexMapEditor : MonoBehaviour {
     HexDirection dragDirection;
 
     public HexGrid hexGrid;
-    public GameManager gameManager;
+    public GameController gameController;
 
     bool isDrag;
 
@@ -31,7 +31,7 @@ public class HexMapEditor : MonoBehaviour {
     public Material terrainMaterial;
 
     public void SetOwner(int index) {
-        owner = gameManager.GetPlayer(index);
+        owner = gameController.GetPlayer(index);
     }
 
     public void SetTerrainTypeIndex(int index) {
@@ -151,7 +151,8 @@ public class HexMapEditor : MonoBehaviour {
         HexCell cell = GetCellUnderCursor();
         if (cell && !cell.Unit) {
             GameUnit unit = Instantiate(HexUnit.unitPrefab).GetComponent<GameUnit>();
-            unit.Owner = gameManager.GetPlayerIndex(owner);
+            unit.Owner = gameController.GetPlayerIndex(owner);
+            Debug.Log(unit);
             /*switch (owner) {
                 case 0:
                     unit.GetComponentInChildren<Renderer>().material.color = Color.blue;
@@ -167,6 +168,8 @@ public class HexMapEditor : MonoBehaviour {
                     break;
             }
             */
+            Debug.Log(unit.HexUnit);
+
             hexGrid.AddUnit(unit.HexUnit, cell, Random.Range(0f, 360f));
         }
     }
@@ -174,7 +177,7 @@ public class HexMapEditor : MonoBehaviour {
     void DestroyUnit() {
         HexCell cell = GetCellUnderCursor();
         if (cell && cell.Unit) {
-            hexGrid.RemoveUnit(cell.Unit.HexUnit);
+            hexGrid.RemoveUnit(cell.Unit);
         }
     }
 

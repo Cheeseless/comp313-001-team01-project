@@ -54,7 +54,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4629577413084912}
   - component: {fileID: 114965535100116854}
-  - component: {fileID: 114254065505649676}
+  - component: {fileID: 114410245891614030}
   m_Layer: 0
   m_Name: Armor Lad
   m_TagString: Untagged
@@ -183,7 +183,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1222299202177886}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1236.9137, y: -99.85446, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4115203338935254}
@@ -383,6 +383,19 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: New Text
+--- !u!114 &114410245891614030
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1222299202177886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 434bba114c5e84a0f8fb19ef55b2766a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  traveled: 0
+  movementRange: 0
 --- !u!114 &114639629741224272
 MonoBehaviour:
   m_ObjectHideFlags: 1

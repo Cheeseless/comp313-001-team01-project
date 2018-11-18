@@ -2839,7 +2839,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 333297599}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5069366424a544be0b028f5cef956c44, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f4053ebcac63ae4194e8630fc1a10a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 1571186511}
@@ -10961,16 +10961,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 414a0fc06528949a0baff4f719b04a4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellCountX: 20
-  cellCountZ: 15
+  cellCountX: 10
+  cellCountZ: 10
   cellLabelPrefab: {fileID: 11470134, guid: f68794ca03b6f4510b9a5bd6ee9ba2f4, type: 2}
   cellPrefab: {fileID: 11422220, guid: 94c2312396697489abc866a188f80152, type: 2}
   chunkPrefab: {fileID: 114000010052569294, guid: 7622d007cafd044a1b1189c0b93d2912,
     type: 2}
   noiseSource: {fileID: 2800000, guid: 38701cdeb1fb9427cbb585f917aa59cb, type: 3}
   seed: 1234
-  startingMap: 1
-  unitPrefab: {fileID: 114965535100116854, guid: 1bd840a92a87c6e4b8cfd251a5f9f7e8,
+  startingMap: 0
+  unitPrefab: {fileID: 114410245891614030, guid: 1bd840a92a87c6e4b8cfd251a5f9f7e8,
     type: 2}
 --- !u!4 &1571186512
 Transform:
@@ -16138,4 +16138,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexGrid: {fileID: 1571186511}
+  gameController: {fileID: 333297601}
   terrainMaterial: {fileID: 2100000, guid: 6a3f5c7892e4b478e9e745026e6fe9f7, type: 2}

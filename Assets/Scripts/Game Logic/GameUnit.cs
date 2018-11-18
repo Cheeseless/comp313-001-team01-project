@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 #endregion
-
+[RequireComponent(typeof(HexUnit))]
 public class GameUnit : MonoBehaviour {
 
     [SerializeField]
@@ -131,8 +131,12 @@ public class GameUnit : MonoBehaviour {
         moveText.text = "MA: " + MovementRange;
     }
 
-    void Start() {
+    void Awake() {
         HexUnit = GetComponent<HexUnit>();
+    }
+
+    void Start() {
+        hexUnit.movementRange = MovementRange;
         health = maxHealth;
         UpdateUI();
     }
