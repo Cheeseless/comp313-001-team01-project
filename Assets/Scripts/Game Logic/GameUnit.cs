@@ -1,29 +1,54 @@
-﻿using UnityEngine;
+﻿#region usings
+
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using UnityEditor;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class GameUnit : HexUnit {
+#endregion
+
+public class GameUnit : MonoBehaviour {
+
     [SerializeField]
+    int maxHealth;
     int health;
     [SerializeField]
     int damage;
-    
+    [SerializeField]
+    int movementRange;
+
+    HexUnit hexUnit; // graphics-wise unit
+
     bool hasMoved;
     bool hasAttacked;
+    bool busy; //indicates if unit is currently moving or attacking
 
-    
+    [SerializeField]
+    protected int owner;
 
-    [SerializeField] Text hpText;
-    [SerializeField] Text dmgText;
-    [SerializeField] Text moveText;
+    [SerializeField]
+    Text hpText;
+    [SerializeField]
+    Text dmgText;
+    [SerializeField]
+    Text moveText;
+
+    public HexUnit HexUnit {
+        get { return hexUnit; }
+        set { hexUnit = value; }
+    }
 
     public int Health {
         get { return health; }
         set {
             health = value;
+            if (health > maxHealth) {
+                health = maxHealth;
+            }
             UpdateUI();
-            if (health<=0) {
+            if (health <= 0) {
                 Die();
             }
         }
@@ -31,14 +56,15 @@ public class GameUnit : HexUnit {
     public int Damage {
         get { return damage; }
         set {
-            damage = value; 
+            damage = value;
             UpdateUI();
         }
     }
     public int MovementRange {
         get { return movementRange; }
         set {
-            movementRange = value; 
+            movementRange = value;
+            hexUnit.movementRange = value;
             UpdateUI();
         }
     }
@@ -56,35 +82,47 @@ public class GameUnit : HexUnit {
             }
         }
     }
-    public Player Owner {
+    public int Owner {
         get { return owner; }
         set {
-            owner = value; 
+            owner = value;
             UpdateOwnerColor();
         }
     }
 
-    public void AttackOrder(GameUnit other,List<HexCell> path) {
-        StopAllCoroutines();
-        StartCoroutine(AttackMove(other,path));
+    public void AttackOrder(GameUnit other, List<HexCell> path) {
+        if (busy) {
+            //TODO: busy voice clip
+        } else {
+            StopAllCoroutines();
+            StartCoroutine(AttackMove(other, path));
+        }
     }
+
     public void MoveOrder(List<HexCell> path) {
-        StopAllCoroutines();
-        Travel(path);
+        if (busy) {
+            //TODO: busy voice clip
+        } else {
+            StopAllCoroutines();
+            hexUnit.Travel(path);
+        }
     }
 
-    IEnumerator AttackMove(GameUnit other,List<HexCell> path) {
-        
-        TravelMinusOne(path);
-        yield return new WaitUntil(() => traveled);
-        Attack(other);
+    public void Die () {
+        //todo: death animation and sound
+        hexUnit.Die();
+    }
 
+    IEnumerator AttackMove(GameUnit other, List<HexCell> path) {
+        hexUnit.TravelMinusOne(path);
+        yield return new WaitUntil(() => hexUnit.traveled);
+        Attack(other);
+        busy = false;
     }
 
     void Attack(GameUnit other) {
         other.Health -= Damage;
         //todo: play animation
-
     }
 
     void UpdateUI() {
@@ -94,6 +132,8 @@ public class GameUnit : HexUnit {
     }
 
     void Start() {
+        HexUnit = GetComponent<HexUnit>();
+        health = maxHealth;
         UpdateUI();
     }
 
@@ -112,6 +152,14 @@ public class GameUnit : HexUnit {
                 GetComponentInChildren<Renderer>().material.color = Color.black;
                 break;
         }
+    }
+
+    public void Save(BinaryWriter writer) {
+        hexUnit.Save(writer);
+        writer.Write(maxHealth);
+        writer.Write(health);
+        writer.Write(maxHealth);
+        writer.Write(maxHealth);
     }
 
 }

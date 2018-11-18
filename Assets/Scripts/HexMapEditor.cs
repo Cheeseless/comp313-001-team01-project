@@ -150,8 +150,8 @@ public class HexMapEditor : MonoBehaviour {
     void CreateUnit() {
         HexCell cell = GetCellUnderCursor();
         if (cell && !cell.Unit) {
-            GameUnit unit = (GameUnit) Instantiate(HexUnit.unitPrefab);
-            unit.Owner = owner;
+            GameUnit unit = Instantiate(HexUnit.unitPrefab).GetComponent<GameUnit>();
+            unit.Owner = gameManager.GetPlayerIndex(owner);
             /*switch (owner) {
                 case 0:
                     unit.GetComponentInChildren<Renderer>().material.color = Color.blue;
@@ -167,14 +167,14 @@ public class HexMapEditor : MonoBehaviour {
                     break;
             }
             */
-            hexGrid.AddUnit(unit, cell, Random.Range(0f, 360f));
+            hexGrid.AddUnit(unit.HexUnit, cell, Random.Range(0f, 360f));
         }
     }
 
     void DestroyUnit() {
         HexCell cell = GetCellUnderCursor();
         if (cell && cell.Unit) {
-            hexGrid.RemoveUnit(cell.Unit);
+            hexGrid.RemoveUnit(cell.Unit.HexUnit);
         }
     }
 

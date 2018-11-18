@@ -422,7 +422,7 @@ public class HexCell : MonoBehaviour {
 				}
 			}
 			if (Unit) {
-				Unit.ValidateLocation();
+				Unit.HexUnit.ValidateLocation();
 			}
 		}
 	}
@@ -430,7 +430,7 @@ public class HexCell : MonoBehaviour {
 	void RefreshSelfOnly () {
 		chunk.Refresh();
 		if (Unit) {
-			Unit.ValidateLocation();
+			Unit.HexUnit.ValidateLocation();
 		}
 	}
 
