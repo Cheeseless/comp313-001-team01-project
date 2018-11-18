@@ -8,17 +8,17 @@ using UnityEngine;
 
 #endregion
 
+[RequireComponent(typeof(GameUnit))]
 public class HexUnit : MonoBehaviour {
 
-    public bool traveled;
-
     HexCell location;
+    [SerializeField] protected internal int movementRange;
 
     float orientation;
-    [SerializeField]
-    protected internal int movementRange;
 
     List<HexCell> pathToTravel;
+
+    public bool traveled;
 
     public HexCell Location {
         get { return location; }
@@ -27,7 +27,7 @@ public class HexUnit : MonoBehaviour {
                 location.Unit = null;
             }
             location = value;
-            value.Unit = GetComponent<GameUnit>();
+            value.Unit = this;
             transform.localPosition = value.Position;
         }
     }
@@ -39,6 +39,7 @@ public class HexUnit : MonoBehaviour {
             transform.localRotation = Quaternion.Euler(0f, value, 0f);
         }
     }
+    public GameUnit GameUnit { get; set; }
 
     const float rotationSpeed = 180f;
     const float travelSpeed = 4f;
@@ -64,6 +65,7 @@ public class HexUnit : MonoBehaviour {
                 break;
             }
         }
+
         Location = pathToTravel[pathToTravel.Count - 1];
         StartCoroutine(TravelPath());
     }
@@ -75,6 +77,7 @@ public class HexUnit : MonoBehaviour {
             StartCoroutine(LookAt(path.Last().Position));
             return;
         }
+
         pathToTravel = path.GetRange(0, path.Count - 1); // remove the last tile from the path to travel
         Location = pathToTravel[pathToTravel.Count - 1];
         StartCoroutine(TravelPath());
@@ -98,6 +101,7 @@ public class HexUnit : MonoBehaviour {
                 transform.localRotation = Quaternion.LookRotation(d);
                 yield return null;
             }
+
             t -= 1f;
         }
 
