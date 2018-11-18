@@ -28,6 +28,7 @@ public class GameUnit : MonoBehaviour {
     [SerializeField]
     protected int owner;
 
+    //TODO: 
     [SerializeField]
     Text hpText;
     [SerializeField]
@@ -133,6 +134,7 @@ public class GameUnit : MonoBehaviour {
 
     void Awake() {
         HexUnit = GetComponent<HexUnit>();
+        health = 999;
     }
 
     void Start() {
@@ -159,11 +161,18 @@ public class GameUnit : MonoBehaviour {
     }
 
     public void Save(BinaryWriter writer) {
-        hexUnit.Save(writer);
+        writer.Write(owner);
         writer.Write(maxHealth);
-        writer.Write(health);
-        writer.Write(maxHealth);
-        writer.Write(maxHealth);
+        writer.Write(damage);
+        writer.Write(movementRange);
+    }
+    public void Load(BinaryReader reader) {
+        Owner = reader.ReadInt32();
+        maxHealth = reader.ReadInt32();
+        Debug.Log(maxHealth);
+        Health = maxHealth;
+        Damage = reader.ReadInt32();
+        MovementRange = reader.ReadInt32();
     }
 
 }

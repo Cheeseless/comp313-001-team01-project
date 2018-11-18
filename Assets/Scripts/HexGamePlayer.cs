@@ -19,7 +19,7 @@ public class HexGamePlayer : MonoBehaviour {
     HexDirection dragDirection;
 
     public HexGrid hexGrid;
-    public GameManager gameManager;
+    public GameController gameController;
 
     bool isDrag;
 
@@ -31,7 +31,7 @@ public class HexGamePlayer : MonoBehaviour {
     public Material terrainMaterial;
 
     public void SetOwner(int index) {
-        owner = gameManager.GetPlayer(index);
+        owner = gameController.GetPlayer(index);
     }
 
     public void SetTerrainTypeIndex(int index) {
@@ -162,7 +162,7 @@ public class HexGamePlayer : MonoBehaviour {
         HexCell cell = GetCellUnderCursor();
         if (cell && !cell.Unit) {
             GameUnit unit = Instantiate(HexUnit.unitPrefab).GetComponent<GameUnit>();
-            unit.Owner = gameManager.GetPlayerIndex(owner);
+            unit.Owner = gameController.GetPlayerIndex(owner);
             /*switch (owner) {
                 case 0:
                     unit.GetComponentInChildren<Renderer>().material.color = Color.blue;
@@ -185,7 +185,7 @@ public class HexGamePlayer : MonoBehaviour {
     void DestroyUnit() {
         HexCell cell = GetCellUnderCursor();
         if (cell && cell.Unit) {
-            hexGrid.RemoveUnit(cell.Unit.HexUnit);
+            hexGrid.RemoveUnit(cell.Unit);
         }
     }
 
