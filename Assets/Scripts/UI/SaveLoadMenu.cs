@@ -72,7 +72,7 @@ public class SaveLoadMenu : MonoBehaviour {
 			Destroy(listContent.GetChild(i).gameObject);
 		}
 		string[] paths =
-			Directory.GetFiles(Application.persistentDataPath, "*.map");
+			Directory.GetFiles(Application.dataPath, "*.map");
 		Array.Sort(paths);
 		for (int i = 0; i < paths.Length; i++) {
 			SaveLoadItem item = Instantiate(itemPrefab);
@@ -87,8 +87,15 @@ public class SaveLoadMenu : MonoBehaviour {
 		if (mapName.Length == 0) {
 			return null;
 		}
-		return Path.Combine(Application.persistentDataPath, mapName + ".map");
+		return Path.Combine(Application.dataPath, mapName + ".map");
 	}
+
+    static string GetSelectedPath(string name) {
+        if (name.Length == 0) {
+            return null;
+        }
+        return Path.Combine(Application.dataPath, name + ".map");
+    }
 
 	void Save (string path) {
 		using (
@@ -100,20 +107,39 @@ public class SaveLoadMenu : MonoBehaviour {
 		}
 	}
 
-	void Load (string path) {
-		if (!File.Exists(path)) {
-			Debug.LogError("File does not exist " + path);
-			return;
-		}
-		using (BinaryReader reader = new BinaryReader(File.OpenRead(path))) {
-			int header = reader.ReadInt32();
-			if (header <= 2) {
-				hexGrid.Load(reader, header);
-				HexMapCamera.ValidatePosition();
-			}
-			else {
-				Debug.LogWarning("Unknown map format " + header);
-			}
-		}
-	}
+    void Load (string path) {
+        if (!File.Exists(path)) {
+            Debug.LogError("File does not exist " + path);
+            return;
+        }
+        using (BinaryReader reader = new BinaryReader(File.OpenRead(path))) {
+            int header = reader.ReadInt32();
+            if (header <= 2) {
+                hexGrid.Load(reader, header);
+                HexMapCamera.ValidatePosition();
+            }
+            else {
+                Debug.LogWarning("Unknown map format " + header);
+            }
+        }
+    }
+    public static void Load (string name, HexGrid hexGrid) {
+        string path = GetSelectedPath(name);
+        if (!File.Exists(path)) {
+            Debug.LogError("File does not exist " + path);
+            return;
+        }
+        using (BinaryReader reader = new BinaryReader(File.OpenRead(path))) {
+            int header = reader.ReadInt32();
+            if (header <= 2) {
+                hexGrid.Load(reader, header);
+                HexMapCamera.ValidatePosition();
+            }
+            else {
+                Debug.LogWarning("Unknown map format " + header);
+            }
+        }
+    }
+
+   
 }

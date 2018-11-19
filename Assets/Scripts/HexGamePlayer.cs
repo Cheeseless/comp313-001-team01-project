@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class HexMapEditor : MonoBehaviour {
+public class HexGamePlayer : MonoBehaviour {
 
     int activeElevation;
 
@@ -23,7 +23,7 @@ public class HexMapEditor : MonoBehaviour {
 
     bool isDrag;
 
-    int owner;
+    Player owner;
     HexCell previousCell;
 
     OptionalToggle riverMode, roadMode, walledMode;
@@ -31,7 +31,7 @@ public class HexMapEditor : MonoBehaviour {
     public Material terrainMaterial;
 
     public void SetOwner(int index) {
-        owner = index;
+        owner = gameController.GetPlayer(index);
     }
 
     public void SetTerrainTypeIndex(int index) {
@@ -117,26 +117,42 @@ public class HexMapEditor : MonoBehaviour {
 
     void Awake() {
         terrainMaterial.EnableKeyword("GRID_ON");
-        SetEditMode(false);
+        
+        SetEditMode(true);
     }
 
     void Update() {
+        
+
         if (!EventSystem.current.IsPointerOverGameObject()) {
             if (Input.GetMouseButton(0)) {
                 HandleInput();
                 return;
             }
 
-            if (Input.GetKeyDown(KeyCode.U)) {
-                if (Input.GetKey(KeyCode.LeftShift)) {
+
+            if (Input.GetKey(KeyCode.LeftShift)) {
+                Debug.Log("EditMode is On");
+                
+
+                Debug.Log("Building Units");
+                if (Input.GetKeyDown(KeyCode.O)) {
+                    Debug.Log("You tried to kill me");
                     DestroyUnit();
-                }
-                else {
+                    SetEditMode(false);
+                } else if (Input.GetKeyDown(KeyCode.U)) {
+                    Debug.Log("You have created LIFE");
                     CreateUnit();
+                    SetEditMode(false);
+                } else if (Input.GetKeyDown(KeyCode.I)) {
+                    Debug.Log("YOU MAY BE GOD ONCE MORE");
+                    SetEditMode(true);
                 }
+
 
                 return;
             }
+
         }
 
         previousCell = null;
@@ -151,8 +167,7 @@ public class HexMapEditor : MonoBehaviour {
         HexCell cell = GetCellUnderCursor();
         if (cell && !cell.Unit) {
             GameUnit unit = Instantiate(HexUnit.unitPrefab).GetComponent<GameUnit>();
-            unit.Owner =owner;
-            Debug.Log(unit);
+            unit.Owner = gameController.GetPlayerIndex(owner);
             /*switch (owner) {
                 case 0:
                     unit.GetComponentInChildren<Renderer>().material.color = Color.blue;
@@ -168,8 +183,6 @@ public class HexMapEditor : MonoBehaviour {
                     break;
             }
             */
-            Debug.Log(unit.HexUnit);
-
             hexGrid.AddUnit(unit.HexUnit, cell, Random.Range(0f, 360f));
         }
     }
