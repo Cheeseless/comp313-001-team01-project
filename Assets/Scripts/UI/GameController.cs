@@ -27,14 +27,15 @@ public class GameController : MonoBehaviour {
     Text turnText;
 
     public void EndTurn() {
-        turn += 1;
+        turn++;
         turnText.text = "Turn: " + turn;
-        playerText.text = "Player: " + (players.IndexOf(currentPlayer) + 1);
         SetNextPlayer();
+        playerText.text = "Player: " + (players.IndexOf(currentPlayer)+1);
+
     }
 
     void SetNextPlayer() {
-        if (players.IndexOf(currentPlayer) == players.Count) {
+        if (players.IndexOf(currentPlayer) == players.Count-1) {
             currentPlayer = players[0];
         } else {
             currentPlayer = players[players.IndexOf(currentPlayer) + 1];
@@ -42,6 +43,7 @@ public class GameController : MonoBehaviour {
     }
 
     public Player GetPlayer(int index) {
+        Debug.Log(players[index]);
         return players[index];
     }
 
@@ -51,10 +53,12 @@ public class GameController : MonoBehaviour {
 
     void Start() {
         players = new List<Player>();
-        for (int i = 0; i < numberOfPlayers; i++) players.Add(new Player());
-        turn = 0;
-        turnText.text = "Turn: " + (turn + 1);
-        playerText.text = "Player: " + (turn % numberOfPlayers + 1);
+        for (var i = 0; i < numberOfPlayers; i++) players.Add(new Player());
+        Debug.Log(players.Count);
+        turn = 1;
+        currentPlayer = players[0];
+        turnText.text = "Turn: " + turn;
+        playerText.text = "Player: " + + (players.IndexOf(currentPlayer)+1);
     }
 
     public void SetEditMode(bool toggle) {
@@ -69,6 +73,9 @@ public class GameController : MonoBehaviour {
                 DoSelection();
             }
 
+            if (selectedUnit) {
+                Debug.Log(selectedUnit.Owner);
+            }
             if (selectedUnit && GetPlayer(selectedUnit.Owner) == currentPlayer) {
                 if (Input.GetMouseButtonDown(1)) {
                     Debug.Log("Right click");

@@ -23,7 +23,7 @@ public class HexMapEditor : MonoBehaviour {
 
     bool isDrag;
 
-    Player owner;
+    int owner;
     HexCell previousCell;
 
     OptionalToggle riverMode, roadMode, walledMode;
@@ -31,7 +31,7 @@ public class HexMapEditor : MonoBehaviour {
     public Material terrainMaterial;
 
     public void SetOwner(int index) {
-        owner = gameController.GetPlayer(index);
+        owner = index;
     }
 
     public void SetTerrainTypeIndex(int index) {
@@ -116,7 +116,7 @@ public class HexMapEditor : MonoBehaviour {
     }
 
     void Awake() {
-        terrainMaterial.DisableKeyword("GRID_ON");
+        terrainMaterial.EnableKeyword("GRID_ON");
         SetEditMode(false);
     }
 
@@ -151,7 +151,7 @@ public class HexMapEditor : MonoBehaviour {
         HexCell cell = GetCellUnderCursor();
         if (cell && !cell.Unit) {
             GameUnit unit = Instantiate(HexUnit.unitPrefab).GetComponent<GameUnit>();
-            unit.Owner = gameController.GetPlayerIndex(owner);
+            unit.Owner =owner;
             Debug.Log(unit);
             /*switch (owner) {
                 case 0:

@@ -48,7 +48,7 @@ public class HexGrid : MonoBehaviour {
     void Start() {
         if(startingMap)
         {
-            SaveLoadMenu.Load("testStage1", this);
+            SaveLoadMenu.Load("TestStage", this);
         }
     }
 

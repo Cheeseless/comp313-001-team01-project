@@ -87,6 +87,7 @@ public class GameUnit : MonoBehaviour {
         get { return owner; }
         set {
             owner = value;
+            Debug.Log(owner);
             UpdateOwnerColor();
         }
     }
