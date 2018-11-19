@@ -3817,7 +3817,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "W - Up\n\nA - Left \n\nS - Down \n\nD - Right\n\nLeft Click - Select Unit\n\nRight
-    Click - Unit Movement / Interaction\n"
+    Click - Unit Movement / Interaction\n\nMouse Wheel - Zoom in/out\n\n"
 --- !u!222 &1733699849
 CanvasRenderer:
   m_ObjectHideFlags: 0
