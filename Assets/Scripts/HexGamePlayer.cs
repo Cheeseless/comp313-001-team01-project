@@ -122,32 +122,37 @@ public class HexGamePlayer : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetKey(KeyCode.LeftShift)) {
-            Debug.Log("EditMode is On");
-            SetEditMode(true);
-        }
+        
 
         if (!EventSystem.current.IsPointerOverGameObject()) {
             if (Input.GetMouseButton(0)) {
                 HandleInput();
                 return;
             }
-            
 
-            if (Input.GetKey(KeyCode.LeftControl)) {
+
+            if (Input.GetKey(KeyCode.LeftShift)) {
+                Debug.Log("EditMode is On");
+                
+
                 Debug.Log("Building Units");
-                if (Input.GetKey(KeyCode.Mouse0)) {
-                    DestroyUnit();
+                if (Input.GetKeyDown(KeyCode.O)) {
                     Debug.Log("You tried to kill me");
-                }
-                else if (Input.GetKey(KeyCode.Mouse1)){
+                    DestroyUnit();
+                    SetEditMode(false);
+                } else if (Input.GetKeyDown(KeyCode.U)) {
                     Debug.Log("You have created LIFE");
                     CreateUnit();
-                   
+                    SetEditMode(false);
+                } else if (Input.GetKeyDown(KeyCode.I)) {
+                    Debug.Log("YOU MAY BE GOD ONCE MORE");
+                    SetEditMode(true);
                 }
+
 
                 return;
             }
+
         }
 
         previousCell = null;
