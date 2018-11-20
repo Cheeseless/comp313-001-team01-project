@@ -93,20 +93,28 @@ public class GameUnit : MonoBehaviour {
     }
 
     public void AttackOrder(GameUnit other, List<HexCell> path) {
-        if (busy) {
-            //TODO: busy voice clip
-        } else {
-            StopAllCoroutines();
-            StartCoroutine(AttackMove(other, path));
+        if (!HasAttacked) {
+            HasAttacked = true;
+            if (busy) {
+                //TODO: busy voice clip
+            }
+            else {
+                StopAllCoroutines();
+                StartCoroutine(AttackMove(other, path));
+            }
         }
     }
 
     public void MoveOrder(List<HexCell> path) {
-        if (busy) {
-            //TODO: busy voice clip
-        } else {
-            StopAllCoroutines();
-            hexUnit.Travel(path);
+        if (!HasMoved) {
+            HasMoved = true;
+            if (busy) {
+                //TODO: busy voice clip
+            }
+            else {
+                StopAllCoroutines();
+                hexUnit.Travel(path);
+            }
         }
     }
 
@@ -176,4 +184,8 @@ public class GameUnit : MonoBehaviour {
         MovementRange = reader.ReadInt32();
     }
 
+    public void Refresh() {
+        HasMoved = false;
+        HasAttacked = false;
+    }
 }

@@ -26,12 +26,18 @@ public class GameController : MonoBehaviour {
     [SerializeField]
     Text turnText;
 
+    public GameObject leftPanel;
+    public GameObject rightPanel;
+    public GameObject editCheckbox;
+
+    public bool editMode;
+
     public void EndTurn() {
         turn++;
         turnText.text = "Turn: " + turn;
         SetNextPlayer();
         playerText.text = "Player: " + (players.IndexOf(currentPlayer)+1);
-
+        grid.Units.ForEach((x) => x.GameUnit.Refresh());
     }
 
     void SetNextPlayer() {
@@ -59,12 +65,29 @@ public class GameController : MonoBehaviour {
         currentPlayer = players[0];
         turnText.text = "Turn: " + turn;
         playerText.text = "Player: " + + (players.IndexOf(currentPlayer)+1);
+        editMode = false;
     }
 
     public void SetEditMode(bool toggle) {
         enabled = !toggle;
         grid.ShowUI(!toggle);
         grid.ClearPath();
+    }
+
+    public void ToggleEditMode() {
+        if (editMode) {
+            editMode = false;
+            leftPanel.SetActive(false);
+            rightPanel.SetActive(false);
+            editCheckbox.GetComponent<Toggle>().isOn = true;
+
+        }
+        else {
+            editMode = true;
+            leftPanel.SetActive(true);
+            rightPanel.SetActive(true);
+            editCheckbox.GetComponent<Toggle>().isOn = true;
+        }
     }
 
     void Update() {
