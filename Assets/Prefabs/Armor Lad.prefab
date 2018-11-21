@@ -881,6 +881,7 @@ GameObject:
   - component: {fileID: 223328781728388264}
   - component: {fileID: 114192390970790488}
   - component: {fileID: 114043497013862164}
+  - component: {fileID: 114166502026197978}
   m_Layer: 0
   m_Name: HBCanvas
   m_TagString: Untagged
@@ -1337,8 +1338,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1331668044013472}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.43, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalPosition: {x: 0, y: 0.23, z: 0.07}
+  m_LocalScale: {x: 8, y: 8, z: 8}
   m_Children:
   - {fileID: 4387168923854836}
   - {fileID: 4021471347487372}
@@ -1893,7 +1894,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1222299202177886}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.62, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4123971694975756}
@@ -3077,6 +3078,17 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114166502026197978
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1790056088471200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1084dd5421e49a14d8172acd167087e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114192390970790488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3201,9 +3213,7 @@ MonoBehaviour:
   damage: 5
   movementRange: 16
   owner: 0
-  hpText: {fileID: 0}
-  dmgText: {fileID: 0}
-  moveText: {fileID: 0}
+  healthBar: {fileID: 114665095581828592}
 --- !u!137 &137099423718645350
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

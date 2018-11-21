@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour {
     public HexGrid grid;
 
     [SerializeField]
-    int numberOfPlayers;
+    int numberOfPlayers = 2;
     List<Player> players;
     Player currentPlayer;
 
@@ -33,6 +33,7 @@ public class GameController : MonoBehaviour {
     public bool editMode;
 
     public void EndTurn() {
+        Debug.Log("Pies");
         turn++;
         turnText.text = "Turn: " + turn;
         SetNextPlayer();
