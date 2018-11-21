@@ -38,6 +38,10 @@ public class HexGrid : MonoBehaviour {
         }
     }
 
+    public List<HexUnit> Units {
+        get { return units; }
+    }
+
     void Awake() {
         HexMetrics.noiseSource = noiseSource;
         HexMetrics.InitializeHashGrid(seed);
