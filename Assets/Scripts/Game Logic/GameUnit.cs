@@ -28,13 +28,9 @@ public class GameUnit : MonoBehaviour {
     [SerializeField]
     protected int owner;
 
-    //TODO: 
+    
     [SerializeField]
-    Text hpText;
-    [SerializeField]
-    Text dmgText;
-    [SerializeField]
-    Text moveText;
+    Slider healthBar;
 
     public HexUnit HexUnit {
         get { return hexUnit; }
@@ -128,9 +124,8 @@ public class GameUnit : MonoBehaviour {
     }
 
     void UpdateUI() {
-        hpText.text = "HP: " + Health;
-        dmgText.text = "DMG: " + Damage;
-        moveText.text = "MA: " + MovementRange;
+        healthBar.maxValue = maxHealth;
+        healthBar.value = Health;
     }
 
     void Awake() {
@@ -140,8 +135,8 @@ public class GameUnit : MonoBehaviour {
 
     void Start() {
         hexUnit.movementRange = MovementRange;
-        health = maxHealth;
-        UpdateUI();
+        Health = maxHealth;
+        UpdateUI(); //might not be necessary
     }
 
     public void UpdateOwnerColor() {
