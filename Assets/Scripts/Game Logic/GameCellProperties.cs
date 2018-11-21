@@ -9,6 +9,19 @@ public class GameCellProperties : MonoBehaviour
     [SerializeField] TileType movementCost = TileType.Field;
     bool isOnFire;
 
+    public TileType MovementCost
+    {
+        get
+        {
+            return movementCost;
+        }
+
+        set
+        {
+            movementCost = value;
+        }
+    }
+
     public bool IsOnFire
     {
         get
