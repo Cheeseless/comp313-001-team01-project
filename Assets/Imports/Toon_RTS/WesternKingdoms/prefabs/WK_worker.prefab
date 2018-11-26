@@ -4164,6 +4164,7 @@ GameObject:
   - component: {fileID: 223027795443144294}
   - component: {fileID: 114705726498711778}
   - component: {fileID: 114841051208448008}
+  - component: {fileID: 114969321911743758}
   m_Layer: 0
   m_Name: HBCanvas
   m_TagString: Untagged
@@ -4375,6 +4376,17 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &114969321911743758
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1380442804296848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 555ef9fd24e5bd64ca170d287ab5de57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &222242195260507002
 CanvasRenderer:
   m_ObjectHideFlags: 1

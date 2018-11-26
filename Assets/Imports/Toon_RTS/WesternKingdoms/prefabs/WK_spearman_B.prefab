@@ -4180,6 +4180,7 @@ GameObject:
   - component: {fileID: 223745926929643040}
   - component: {fileID: 114623013034789616}
   - component: {fileID: 114858657534089570}
+  - component: {fileID: 114063960434943364}
   m_Layer: 0
   m_Name: HBCanvas
   m_TagString: Untagged
@@ -4263,6 +4264,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114063960434943364
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1450745044450798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 555ef9fd24e5bd64ca170d287ab5de57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114462945299806304
 MonoBehaviour:
   m_ObjectHideFlags: 1
