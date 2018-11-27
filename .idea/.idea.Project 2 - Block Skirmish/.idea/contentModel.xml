@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\chees\.Rider2018.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\chees\.Rider2018.3\system\resharper-host\Temp\ReSharper.Db.2018-11-27_03-04-05.774.99" t="ExcludeRecursive" />
+    <e p="C:\Users\chees\AppData\Local\Android\Sdk\platforms\android-27\data\res" t="IncludeRecursive" />
+    <e p="C:\Users\chees\AppData\Local\Android\Sdk\sources\android-27" t="IncludeRecursive" />
+    <e p="F:\Projects\Project 2 - Block Skirmish" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Imports" t="Include">
+          <e p="Emerald Treasure" t="Include">
+            <e p="fonts" t="Include">
+              <e p="LICENSE.txt" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Materials" t="Include">
+          <e p="Estuary.shader" t="Include" />
+          <e p="Highlight" t="Include">
+            <e p="Highlight.shader" t="Include" />
+          </e>
+          <e p="River.shader" t="Include" />
+          <e p="Road.shader" t="Include" />
+          <e p="VertexColors.shader" t="Include" />
+          <e p="Water Shore.shader" t="Include" />
+          <e p="Water.cginc" t="Include" />
+          <e p="Water.shader" t="Include" />
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="Bezier.cs" t="Include" />
+          <e p="EdgeVertices.cs" t="Include" />
+          <e p="Editor" t="Include">
+            <e p="HexCoordinatesDrawer.cs" t="Include" />
+            <e p="TextureArrayWizard.cs" t="Include" />
+          </e>
+          <e p="Game Logic" t="Include">
+            <e p="Ability.cs" t="Include" />
+            <e p="BasicAttack.cs" t="Include" />
+            <e p="GameCell.cs" t="Include" />
+            <e p="GameCellProperties.cs" t="Include" />
+            <e p="GameUnit.cs" t="Include" />
+            <e p="Health.cs" t="Include" />
+            <e p="Player.cs" t="Include" />
+            <e p="StatModifier.cs" t="Include" />
+          </e>
+          <e p="HexCell.cs" t="Include" />
+          <e p="HexCellPriorityQueue.cs" t="Include" />
+          <e p="HexCoordinates.cs" t="Include" />
+          <e p="HexDirection.cs" t="Include" />
+          <e p="HexEdgeType.cs" t="Include" />
+          <e p="HexFeatureCollection.cs" t="Include" />
+          <e p="HexFeatureManager.cs" t="Include" />
+          <e p="HexGamePlayer.cs" t="Include" />
+          <e p="HexGrid.cs" t="Include" />
+          <e p="HexGridChunk.cs" t="Include" />
+          <e p="HexHash.cs" t="Include" />
+          <e p="HexMapCamera.cs" t="Include" />
+          <e p="HexMapEditor.cs" t="Include" />
+          <e p="HexMesh.cs" t="Include" />
+          <e p="HexMetrics.cs" t="Include" />
+          <e p="HexUnit.cs" t="Include" />
+          <e p="ListPool.cs" t="Include" />
+          <e p="Orientation.cs" t="Include" />
+          <e p="OrientTowardsCamera.cs" t="Include" />
+          <e p="UI" t="Include">
+            <e p="CombatWindow.cs" t="Include" />
+            <e p="GameController.cs" t="Include" />
+            <e p="HealthBar.cs" t="Include" />
+            <e p="NewMapMenu.cs" t="Include" />
+            <e p="PauseMenu.cs" t="Include" />
+            <e p="SaveLoadItem.cs" t="Include" />
+            <e p="SaveLoadMenu.cs" t="Include" />
+            <e p="SettingsMenu.cs" t="Include" />
+          </e>
+        </e>
+        <e p="TextMesh Pro" t="Include">
+          <e p="Resources" t="Include">
+            <e p="LineBreaking Following Characters.txt" t="Include" />
+            <e p="LineBreaking Leading Characters.txt" t="Include" />
+            <e p="Shaders" t="Include">
+              <e p="TMP_Bitmap-Custom-Atlas.shader" t="Include" />
+              <e p="TMP_Bitmap-Mobile.shader" t="Include" />
+              <e p="TMP_Bitmap.shader" t="Include" />
+              <e p="TMP_SDF Overlay.shader" t="Include" />
+              <e p="TMP_SDF-Mobile Masking.shader" t="Include" />
+              <e p="TMP_SDF-Mobile Overlay.shader" t="Include" />
+              <e p="TMP_SDF-Mobile.shader" t="Include" />
+              <e p="TMP_SDF-Surface-Mobile.shader" t="Include" />
+              <e p="TMP_SDF-Surface.shader" t="Include" />
+              <e p="TMP_SDF.shader" t="Include" />
+              <e p="TMP_Sprite.shader" t="Include" />
+              <e p="TMPro.cginc" t="Include" />
+              <e p="TMPro_Properties.cginc" t="Include" />
+              <e p="TMPro_Surface.cginc" t="Include" />
+            </e>
+          </e>
+          <e p="Sprites" t="Include">
+            <e p="EmojiOne Attribution.txt" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="Library" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Project 2 - Block Skirmish.sln" t="IncludeFlat" />
+      <e p="Temp" t="ExcludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+      </e>
+    </e>
+  </component>
+</project>

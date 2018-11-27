@@ -1,15 +1,13 @@
-﻿internal class BasicAttack: Ability {
+﻿internal class BasicAttack : IAbility {
 
-    public override void Select() {
-        
+    public void Select(GameUnit source) {
+        var defender = source.Target;
     }
 
-    public override void Refresh() {
-        throw new System.NotImplementedException();
+    public void Refresh(GameUnit source) {
     }
 
-    public override void Execute() {
-        throw new System.NotImplementedException();
+    public void Execute(GameUnit source) {
     }
 
 }

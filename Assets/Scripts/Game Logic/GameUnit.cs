@@ -70,6 +70,7 @@ public class GameUnit : MonoBehaviour {
             UpdateOwnerColor();
         }
     }
+    public GameUnit Target { get; set; }
 
     public void AttackOrder(GameUnit other, List<HexCell> path) {
         if (!HasAttacked) {
