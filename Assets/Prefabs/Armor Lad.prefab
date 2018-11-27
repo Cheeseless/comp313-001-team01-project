@@ -270,6 +270,7 @@ GameObject:
   - component: {fileID: 4629577413084912}
   - component: {fileID: 114965535100116854}
   - component: {fileID: 114410245891614030}
+  - component: {fileID: 114680508275739724}
   m_Layer: 0
   m_Name: Armor Lad
   m_TagString: Untagged
@@ -1338,7 +1339,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1331668044013472}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.23, z: 0.07}
+  m_LocalPosition: {x: 0, y: -0, z: 0.07}
   m_LocalScale: {x: 8, y: 8, z: 8}
   m_Children:
   - {fileID: 4387168923854836}
@@ -3198,6 +3199,18 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114680508275739724
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1222299202177886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b050e5f078665449b7cc6fc48bd26ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 15
 --- !u!114 &114965535100116854
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3209,11 +3222,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1664e0ec84c7486a8e09180c0c4ee1ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 15
-  damage: 5
+  attackPower: 5
   movementRange: 16
   owner: 0
-  healthBar: {fileID: 114665095581828592}
+  health: {fileID: 114680508275739724}
+  animator: {fileID: 95000235422105256}
 --- !u!137 &137099423718645350
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

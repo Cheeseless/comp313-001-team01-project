@@ -1,44 +1,46 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿#region usings
+
 using UnityEngine;
 using UnityEngine.UI;
 
+#endregion
+
 public class HealthBar : MonoBehaviour {
 
-    private Slider slider;
+    Slider slider;
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         slider = gameObject.GetComponentInChildren<Slider>();
-        this.Damage(200, 400);
-        Debug.Log(slider.value);
-        this.Heal(100, 400);
-        Debug.Log(slider.value);
     }
 
-    public void FullHeal()
-    {
-        slider.value = 100;
-
+    public int MaxValue {
+        get { return (int)slider.maxValue; }
+        set { slider.maxValue = value; }
+    }
+    public int Value {
+        get { return (int)slider.value; }
+        set { slider.value = value; }
     }
 
-    public void Heal(float amount, float maxHealth)
-    {
-        float heal;
-        heal = (100 * amount) / maxHealth;
-        slider.value = slider.value + heal;
-
+    public void SetMaxValue(int value) {
+        slider.maxValue = value;
+        slider.value = value;
     }
 
-    public void Damage(float amount, float maxHealth)
-    {
-        float damage;
-        damage = (100 * amount) / maxHealth;
-        slider.value = slider.value - damage;
+    public void FullHeal() {
+        slider.value = slider.maxValue;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    public void Heal(int amount) {
+        slider.value = slider.value + amount;
+    }
+
+    public void Damage(int amount) {
+        slider.value = slider.value - amount; // we don't care about any death conditions here.
+        if (slider.value < 0) {
+            slider.value = 0; // might as well have this for now, no need to display overkill unless we need the feedback
+        }
+    }
+
 }

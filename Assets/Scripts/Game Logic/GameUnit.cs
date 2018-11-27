@@ -3,19 +3,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 #endregion
-[RequireComponent(typeof(HexUnit))]
+[RequireComponent(typeof(HexUnit),typeof(Health))]
 public class GameUnit : MonoBehaviour {
 
     [SerializeField]
-    int maxHealth;
-    int health;
-    [SerializeField]
-    int damage;
+    int attackPower;
     [SerializeField]
     int movementRange;
 
@@ -30,31 +26,19 @@ public class GameUnit : MonoBehaviour {
 
     
     [SerializeField]
-    Slider healthBar;
+    Health health;
+
+    public Animator animator;
 
     public HexUnit HexUnit {
         get { return hexUnit; }
         set { hexUnit = value; }
     }
-
-    public int Health {
-        get { return health; }
+    
+    public int AttackPower {
+        get { return attackPower; }
         set {
-            health = value;
-            if (health > maxHealth) {
-                health = maxHealth;
-            }
-            UpdateUI();
-            if (health <= 0) {
-                Die();
-            }
-        }
-    }
-    public int Damage {
-        get { return damage; }
-        set {
-            damage = value;
-            UpdateUI();
+            attackPower = value;
         }
     }
     public int MovementRange {
@@ -62,7 +46,6 @@ public class GameUnit : MonoBehaviour {
         set {
             movementRange = value;
             hexUnit.movementRange = value;
-            UpdateUI();
         }
     }
     public bool HasMoved {
@@ -109,6 +92,7 @@ public class GameUnit : MonoBehaviour {
             }
             else {
                 StopAllCoroutines();
+                SetMoving(true);
                 hexUnit.Travel(path);
             }
         }
@@ -127,24 +111,23 @@ public class GameUnit : MonoBehaviour {
     }
 
     void Attack(GameUnit other) {
-        other.Health -= Damage;
+        other.Damage(AttackPower); //todo: proper damage calculation
+
+        //todo: set this up with proper attack ability selection
         //todo: play animation
     }
 
-    void UpdateUI() {
-        healthBar.maxValue = maxHealth;
-        healthBar.value = Health;
+
+    public void Damage(int amount) {
+        health.Damage(amount);
     }
 
     void Awake() {
         HexUnit = GetComponent<HexUnit>();
-        health = 999;
     }
 
     void Start() {
         hexUnit.movementRange = MovementRange;
-        Health = maxHealth;
-        UpdateUI(); //might not be necessary
     }
 
     public void UpdateOwnerColor() {
@@ -166,21 +149,25 @@ public class GameUnit : MonoBehaviour {
 
     public void Save(BinaryWriter writer) {
         writer.Write(owner);
-        writer.Write(maxHealth);
-        writer.Write(damage);
+        writer.Write(attackPower);
         writer.Write(movementRange);
+        health.Save(writer);
     }
     public void Load(BinaryReader reader) {
         Owner = reader.ReadInt32();
-        maxHealth = reader.ReadInt32();
-        Debug.Log(maxHealth);
-        Health = maxHealth;
-        Damage = reader.ReadInt32();
+        AttackPower = reader.ReadInt32();
         MovementRange = reader.ReadInt32();
+        health.Load(reader);
+
     }
 
     public void Refresh() {
         HasMoved = false;
         HasAttacked = false;
     }
+
+    public void SetMoving(bool b) {
+        animator.SetBool("Moving", b);
+    }
+
 }
