@@ -23,12 +23,12 @@ public class GameUnit : MonoBehaviour {
 
     [SerializeField]
     protected int owner;
+    public Animator animator;
 
     
     [SerializeField]
     Health health;
 
-    public Animator animator;
 
     public HexUnit HexUnit {
         get { return hexUnit; }
@@ -92,7 +92,6 @@ public class GameUnit : MonoBehaviour {
             }
             else {
                 StopAllCoroutines();
-                SetMoving(true);
                 hexUnit.Travel(path);
             }
         }
@@ -104,8 +103,10 @@ public class GameUnit : MonoBehaviour {
     }
 
     IEnumerator AttackMove(GameUnit other, List<HexCell> path) {
+        SetMoving(true);
         hexUnit.TravelMinusOne(path);
         yield return new WaitUntil(() => hexUnit.traveled);
+        SetMoving(false);
         Attack(other);
         busy = false;
     }
@@ -115,6 +116,13 @@ public class GameUnit : MonoBehaviour {
 
         //todo: set this up with proper attack ability selection
         //todo: play animation
+    }
+    public void SetMoving(bool b) {
+        animator.SetBool("Moving", b);
+    }
+
+    public void SetAttacking(bool b) {
+        animator.SetBool("Attacking", b);
     }
 
 
@@ -166,8 +174,6 @@ public class GameUnit : MonoBehaviour {
         HasAttacked = false;
     }
 
-    public void SetMoving(bool b) {
-        animator.SetBool("Moving", b);
-    }
+    
 
 }

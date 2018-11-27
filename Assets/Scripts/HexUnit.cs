@@ -16,7 +16,6 @@ public class HexUnit : MonoBehaviour {
 
     float orientation;
 
-    public Animator animator;
 
     List<HexCell> pathToTravel;
 
@@ -45,7 +44,7 @@ public class HexUnit : MonoBehaviour {
     public GameUnit GameUnit { get; set; }
 
     const float rotationSpeed = 180f;
-    const float travelSpeed = 4f;
+    const float travelSpeed = 4f; //speed at which unit moves along path, nothing to do with movementRange
 
     public static HexUnit unitPrefab;
 
@@ -87,7 +86,6 @@ public class HexUnit : MonoBehaviour {
     }
 
     IEnumerator TravelPath() {
-        SetMoving(true);
 
         traveled = false;
         Vector3 a, b, c = pathToTravel[0].Position;
@@ -126,7 +124,6 @@ public class HexUnit : MonoBehaviour {
         ListPool<HexCell>.Add(pathToTravel);
         pathToTravel = null;
         traveled = true;
-        GameUnit.SetMoving(false); //I wish this call wasn't here, it messes up the separation.
     }
 
     IEnumerator LookAt(Vector3 point) {
@@ -181,10 +178,7 @@ public class HexUnit : MonoBehaviour {
         }
     }
 
-    public void SetMoving(bool b) {
-        animator.SetBool("Moving", b);
-    }
-
+    
 
 
 }
