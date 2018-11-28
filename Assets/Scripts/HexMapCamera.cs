@@ -46,6 +46,7 @@ public class HexMapCamera : MonoBehaviour {
 
         Vector3 position = new Vector3(xMax / 2f, 0f, zMax / 2f);
         transform.position = position;
+        AdjustZoom(-0.5f);
     }
 
     void Update () {
