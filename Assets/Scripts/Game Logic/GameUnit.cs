@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 #endregion
-[RequireComponent(typeof(HexUnit),typeof(Health))]
+[RequireComponent(typeof(HexUnit),typeof(Health),typeof(BasicAttack))]
 public class GameUnit : MonoBehaviour {
 
     [SerializeField]
@@ -28,6 +28,9 @@ public class GameUnit : MonoBehaviour {
     
     [SerializeField]
     Health health;
+
+    [SerializeField]
+    BasicAttack basicAttack;
 
 
     public HexUnit HexUnit {
