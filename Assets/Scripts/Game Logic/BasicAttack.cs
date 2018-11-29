@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-
+[CreateAssetMenu(fileName = "New Attack", menuName = "Basic Attack")]
 [RequireComponent(typeof(GameUnit))]
 internal class BasicAttack : Ability {
 

@@ -30,8 +30,8 @@ public class GameUnit : MonoBehaviour {
     Health health;
 
     [SerializeField]
-    BasicAttack basicAttack;
-
+    Ability[] abilities;
+    
 
     public HexUnit HexUnit {
         get { return hexUnit; }
@@ -116,7 +116,7 @@ public class GameUnit : MonoBehaviour {
     }
 
     void Attack(GameUnit other) {
-        basicAttack.Execute(other);
+        
     }
     public void SetMoving(bool b) {
         animator.SetBool("Moving", b);
