@@ -11,5 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 706adc553b9cabf4f91cae00c92bb049, type: 3}
   m_Name: BasicAttack
   m_EditorClassIdentifier: 
-  minDamage: 0
-  maxDamage: 0
+  minDamage: 2
+  maxDamage: 4

@@ -119,7 +119,7 @@ public class GameUnit : MonoBehaviour {
 
     void Attack(GameUnit other) {
         var attack = GetComponent<BasicAttack>();
-        attack.Execute();
+        attack.Execute(this);
         
 
     }

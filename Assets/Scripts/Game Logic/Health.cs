@@ -33,11 +33,12 @@ public class Health : MonoBehaviour {
             UpdateUI();
         }
     }
-    void Start() {
-        CurrentHealth = maxHealth;
+    void Awake() {
         gameUnit = GetComponent<GameUnit>();
         healthBar = GetComponentInChildren<HealthBar>();
+        Debug.Log(healthBar);
         healthBar.SetMaxValue(maxHealth);
+        CurrentHealth = maxHealth;
         UpdateUI();
     }
     public void Damage(int amount) {
@@ -64,7 +65,6 @@ public class Health : MonoBehaviour {
     public void Load(BinaryReader reader){
         MaxHealth = reader.ReadInt32();
         CurrentHealth = reader.ReadInt32();
-        UpdateUI();
     }
 
 }

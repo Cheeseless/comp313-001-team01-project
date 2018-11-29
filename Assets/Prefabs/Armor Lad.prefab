@@ -883,6 +883,7 @@ GameObject:
   - component: {fileID: 114192390970790488}
   - component: {fileID: 114043497013862164}
   - component: {fileID: 114166502026197978}
+  - component: {fileID: 114650686045309256}
   m_Layer: 0
   m_Name: HBCanvas
   m_TagString: Untagged
@@ -3151,6 +3152,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114650686045309256
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1790056088471200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 555ef9fd24e5bd64ca170d287ab5de57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114665095581828592
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3225,8 +3237,10 @@ MonoBehaviour:
   attackPower: 5
   movementRange: 16
   owner: 0
-  health: {fileID: 114680508275739724}
   animator: {fileID: 95000235422105256}
+  health: {fileID: 114680508275739724}
+  abilities:
+  - {fileID: 11400000, guid: fd98004d433049d43a18b2bb66584f08, type: 2}
 --- !u!137 &137099423718645350
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

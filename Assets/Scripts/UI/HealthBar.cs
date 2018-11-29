@@ -9,8 +9,7 @@ public class HealthBar : MonoBehaviour {
 
     Slider slider;
 
-    // Use this for initialization
-    void Start() {
+    void Awake() {
         slider = gameObject.GetComponentInChildren<Slider>();
     }
 
@@ -24,6 +23,11 @@ public class HealthBar : MonoBehaviour {
     }
 
     public void SetMaxValue(int value) {
+        if (slider == null) {
+            slider = gameObject.GetComponentInChildren<Slider>();
+
+        }
+        Debug.Log(slider);
         slider.maxValue = value;
         slider.value = value;
     }
