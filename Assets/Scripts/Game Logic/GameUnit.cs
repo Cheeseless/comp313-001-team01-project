@@ -116,10 +116,7 @@ public class GameUnit : MonoBehaviour {
     }
 
     void Attack(GameUnit other) {
-        other.Damage(AttackPower); //todo: proper damage calculation
-
-        //todo: set this up with proper attack ability selection
-        //todo: play animation
+        basicAttack.Execute(other);
     }
     public void SetMoving(bool b) {
         animator.SetBool("Moving", b);
