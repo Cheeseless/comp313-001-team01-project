@@ -31,6 +31,8 @@ public class GameUnit : MonoBehaviour {
 
     [SerializeField]
     Ability[] abilities;
+
+    
     
 
     public HexUnit HexUnit {
@@ -116,7 +118,10 @@ public class GameUnit : MonoBehaviour {
     }
 
     void Attack(GameUnit other) {
+        var attack = GetComponent<BasicAttack>();
+        attack.Execute();
         
+
     }
     public void SetMoving(bool b) {
         animator.SetBool("Moving", b);
