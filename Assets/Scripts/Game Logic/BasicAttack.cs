@@ -13,9 +13,9 @@ internal class BasicAttack : Ability {
     //Maximum Damage;
     public int maxDamage;
     //Damage Modifer;
-    public int damageMod;
-    //FinalDamage;s
-    int damage;
+    int damageMod;
+    
+    
 
 
     GameUnit defender;
@@ -28,17 +28,18 @@ internal class BasicAttack : Ability {
     public void Refresh(GameUnit source) { }
 
     public void Execute(GameUnit source) {
-        //Calculates Damage
-        DamageCalc();
-        //Causes the selected target to take damage.
-        defender.Damage(damage);
+        //Sets the damage Modifier to the attack power of hosted game unit.
+        damageMod = source.AttackPower;
+        //Calculates the damage Causes the selected target to take damage.
+        defender.Damage(DamageCalc());
 
     }
 
     //Calculation of Damage
-    void DamageCalc() {
+    int DamageCalc() {
         //Damage is done via a min and max random function, with the damage mod being a stagnant modifier to the total damage.
-        damage = Random.Range(minDamage, maxDamage) + damageMod;
+        var damage = Random.Range(minDamage, maxDamage) + damageMod;
+        return damage;
     }
 
 }
