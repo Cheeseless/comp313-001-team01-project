@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - T1
+  - Unit1
   layers:
   - Default
   - TransparentFX

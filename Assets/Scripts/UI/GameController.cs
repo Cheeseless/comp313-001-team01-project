@@ -33,13 +33,28 @@ public class GameController : MonoBehaviour {
     public bool editMode;
 
     public void EndTurn() {
-        Debug.Log("Pies");
+        //Debug.Log("Pies");
         turn++;
         Debug.Log(turn);
         turnText.text = "Turn: " + turn;
         SetNextPlayer();
         playerText.text = "Player: " + (players.IndexOf(currentPlayer)+1);
         grid.Units.ForEach((x) => x.GameUnit.Refresh());
+        int lostPlayers = 0;
+        Player wonPlayer = null;
+        for (int i = 0; i < players.Count; i++) {
+            if (players[i].lost) {
+                lostPlayers++;
+            }
+            else {
+                wonPlayer = players[i];
+            }
+        }
+        Debug.Log("Lost: " + lostPlayers);
+        if (lostPlayers == players.Count - 1) {
+            Debug.Log("Player " + wonPlayer.index + " has won.");
+            //TODO: Send the game back to the main menu/restart the level
+        }
     }
 
     void SetNextPlayer() {
@@ -51,7 +66,7 @@ public class GameController : MonoBehaviour {
     }
 
     public Player GetPlayer(int index) {
-        Debug.Log(players[index]);
+        //Debug.Log(players[index]);
         return players[index];
     }
 
@@ -61,13 +76,30 @@ public class GameController : MonoBehaviour {
 
     void Start() {
         players = new List<Player>();
-        for (var i = 0; i < numberOfPlayers; i++) players.Add(new Player());
+        for (int i = 0; i < numberOfPlayers; i++) {
+            players.Add(new Player());
+        }
         Debug.Log(players.Count);
         turn = 1;
         currentPlayer = players[0];
         turnText.text = "Turn: " + turn;
         playerText.text = "Player: " + + (players.IndexOf(currentPlayer)+1);
         editMode = false;
+        for (int j = 0; j < players.Count; j++) {
+            players[j].index = j;
+            if (players[j].units.Count < 1) {
+                var gameObjs = GameObject.FindGameObjectsWithTag("Unit1");
+                foreach (GameObject unitObj in gameObjs) {
+                    GameUnit unit = unitObj.GetComponent<GameUnit>();
+                    Debug.Log(unit.Owner);
+                    if (unit.Owner == j) {
+                        players[j].units.Add(unit);
+                        Debug.Log("Player " + j + " unit added.");
+                    }
+                }
+                players[j].UpdateUnitCount();
+            }
+        }
     }
 
     public void SetEditMode(bool toggle) {
@@ -99,7 +131,7 @@ public class GameController : MonoBehaviour {
             }
 
             if (selectedUnit) {
-                Debug.Log(selectedUnit.Owner);
+                //Debug.Log(selectedUnit.Owner);
             }
             if (selectedUnit && GetPlayer(selectedUnit.Owner) == currentPlayer) {
                 if (Input.GetMouseButtonDown(1)) {
@@ -110,6 +142,11 @@ public class GameController : MonoBehaviour {
                 }
             }
         }
+        for (int i = 0; i < players.Count; i++)
+        {
+            //Debug.Log("Hey player " + i);
+            players[i].UpdateUnitCount();
+        }
     }
 
     void HandleOrder() {
@@ -118,7 +155,8 @@ public class GameController : MonoBehaviour {
         if (grid.HasPath) {
             if (currentCell.Unit) {
                 DoAttack();
-            } else {
+            }
+            else {
                 Debug.Log("Move Order");
                 DoMove();
             }
