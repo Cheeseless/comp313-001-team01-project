@@ -100,7 +100,7 @@ public class GameUnit : MonoBehaviour {
             }
             else {
                 StopAllCoroutines();
-                hexUnit.Travel(path);
+                StartCoroutine(Move(path));
             }
         }
     }
@@ -110,11 +110,21 @@ public class GameUnit : MonoBehaviour {
         hexUnit.Die();
     }
 
+    IEnumerator Move(List<HexCell> path) {
+        SetMoving(true);
+        yield return null;
+        hexUnit.Travel(path);
+        yield return new WaitUntil(() => hexUnit.traveled);
+        SetMoving(false);
+        yield return null;
+    }
     IEnumerator AttackMove(GameUnit other, List<HexCell> path) {
         SetMoving(true);
+        yield return null;
         hexUnit.TravelMinusOne(path);
         yield return new WaitUntil(() => hexUnit.traveled);
         SetMoving(false);
+        yield return null;
         Attack(other);
         busy = false;
     }
