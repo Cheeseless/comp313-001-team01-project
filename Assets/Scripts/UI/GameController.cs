@@ -18,7 +18,7 @@ public class GameController : MonoBehaviour {
     Player currentPlayer;
 
     GameUnit selectedUnit;
-    Behaviour halo;
+    //Behaviour halo;
 
     //int turn;
 
@@ -37,6 +37,11 @@ public class GameController : MonoBehaviour {
         //Debug.Log("Pies");
         //turn++;
         //Debug.Log(turn);
+        grid.Units.ForEach((HexUnit obj) => {
+            if (obj.GameUnit.Selected) {
+                obj.GameUnit.ToggleSelection();
+            }
+        });
         currentPlayer.NextTurn();
         SetNextPlayer();
         turnText.text = "Turn: " + currentPlayer.Turn;
@@ -175,14 +180,14 @@ public class GameController : MonoBehaviour {
     void DoSelection() {
         grid.ClearPath();
         grid.Units.ForEach((HexUnit obj) => {
-            halo = (Behaviour)obj.gameObject.transform.Find("Halo").GetComponent("Halo");
-            halo.enabled = false;
+            if(obj.GameUnit.Selected) {
+                obj.GameUnit.ToggleSelection();
+            }
         });
         UpdateCurrentCell();
         if (currentCell) {
             selectedUnit = currentCell.Unit.GameUnit;
-            halo = (Behaviour)selectedUnit.gameObject.transform.Find("Halo").GetComponent("Halo");
-            halo.enabled = true;
+            selectedUnit.ToggleSelection();
         }
     }
 

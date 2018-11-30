@@ -20,6 +20,18 @@ public class GameUnit : MonoBehaviour {
     bool hasMoved;
     bool hasAttacked;
     bool busy; //indicates if unit is currently moving or attacking
+    bool selected;
+
+    public bool Selected
+    {
+        get
+        {
+            return selected;
+        }
+    }
+
+    [SerializeField] Material glowMat;
+    Material origMat;
 
     [SerializeField]
     protected int owner;
@@ -144,6 +156,27 @@ public class GameUnit : MonoBehaviour {
 
     void Start() {
         hexUnit.movementRange = MovementRange;
+        origMat = transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material;
+    }
+
+    public void ToggleSelection()
+    {
+        if (selected)
+        {
+            selected = false;
+            transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material = origMat;
+            transform.GetChild(0).GetChild(5).GetComponent<Renderer>().material = origMat;
+            transform.GetChild(0).GetChild(10).GetComponent<Renderer>().material = origMat;
+            transform.GetChild(0).GetChild(20).GetComponent<Renderer>().material = origMat;
+        }
+        else
+        {
+            selected = true;
+            transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material = glowMat;
+            transform.GetChild(0).GetChild(5).GetComponent<Renderer>().material = glowMat;
+            transform.GetChild(0).GetChild(10).GetComponent<Renderer>().material = glowMat;
+            transform.GetChild(0).GetChild(20).GetComponent<Renderer>().material = glowMat;
+        }
     }
 
     public void UpdateOwnerColor() {
