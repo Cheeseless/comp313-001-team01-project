@@ -32,10 +32,14 @@ public class GameController : MonoBehaviour {
 
     public bool editMode;
 
+    public AbilityWindow selectedUI;
+
     public void EndTurn() {
         Debug.Log("Pies");
         turn++;
+        Debug.Log(turn);
         turnText.text = "Turn: " + turn;
+        selectedUI.Awake();
         SetNextPlayer();
         playerText.text = "Player: " + (players.IndexOf(currentPlayer)+1);
         grid.Units.ForEach((x) => x.GameUnit.Refresh());
@@ -140,6 +144,9 @@ public class GameController : MonoBehaviour {
         UpdateCurrentCell();
         if (currentCell) {
             selectedUnit = currentCell.Unit.GameUnit;
+            if (selectedUnit.Owner == players.IndexOf(currentPlayer)) {
+                selectedUI.unitSelected(selectedUnit);
+            }
         }
     }
 

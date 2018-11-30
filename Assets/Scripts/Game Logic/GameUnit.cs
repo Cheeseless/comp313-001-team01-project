@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 #endregion
-[RequireComponent(typeof(HexUnit),typeof(Health))]
+[RequireComponent(typeof(HexUnit),typeof(Health),typeof(BasicAttack))]
 public class GameUnit : MonoBehaviour {
 
     [SerializeField]
@@ -29,6 +29,11 @@ public class GameUnit : MonoBehaviour {
     [SerializeField]
     Health health;
 
+    [SerializeField]
+    public Ability[] abilities;
+
+    
+    
 
     public HexUnit HexUnit {
         get { return hexUnit; }
@@ -74,12 +79,14 @@ public class GameUnit : MonoBehaviour {
 
     public void AttackOrder(GameUnit other, List<HexCell> path) {
         if (!HasAttacked) {
+            Target = other;
             HasAttacked = true;
             if (busy) {
                 //TODO: busy voice clip
             }
             else {
                 StopAllCoroutines();
+                
                 StartCoroutine(AttackMove(other, path));
             }
         }
@@ -93,7 +100,7 @@ public class GameUnit : MonoBehaviour {
             }
             else {
                 StopAllCoroutines();
-                hexUnit.Travel(path);
+                StartCoroutine(Move(path));
             }
         }
     }
@@ -103,20 +110,30 @@ public class GameUnit : MonoBehaviour {
         hexUnit.Die();
     }
 
+    IEnumerator Move(List<HexCell> path) {
+        SetMoving(true);
+        yield return null;
+        hexUnit.Travel(path);
+        yield return new WaitUntil(() => hexUnit.traveled);
+        SetMoving(false);
+        yield return null;
+    }
     IEnumerator AttackMove(GameUnit other, List<HexCell> path) {
         SetMoving(true);
+        yield return null;
         hexUnit.TravelMinusOne(path);
         yield return new WaitUntil(() => hexUnit.traveled);
         SetMoving(false);
+        yield return null;
         Attack(other);
         busy = false;
     }
 
     void Attack(GameUnit other) {
-        other.Damage(AttackPower); //todo: proper damage calculation
+        var attack = abilities[0];
+        attack.Execute(this);
+        
 
-        //todo: set this up with proper attack ability selection
-        //todo: play animation
     }
     public void SetMoving(bool b) {
         animator.SetBool("Moving", b);
