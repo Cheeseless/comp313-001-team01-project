@@ -19,7 +19,7 @@ public class GameController : MonoBehaviour {
 
     GameUnit selectedUnit;
 
-    int turn;
+    //int turn;
 
     [SerializeField]
     Text playerText;
@@ -34,20 +34,22 @@ public class GameController : MonoBehaviour {
 
     public void EndTurn() {
         //Debug.Log("Pies");
-        turn++;
-        Debug.Log(turn);
-        turnText.text = "Turn: " + turn;
+        //turn++;
+        //Debug.Log(turn);
+        currentPlayer.NextTurn();
         SetNextPlayer();
+        turnText.text = "Turn: " + currentPlayer.Turn;
         playerText.text = "Player: " + (players.IndexOf(currentPlayer)+1);
-        grid.Units.ForEach((x) => x.GameUnit.Refresh());
         int lostPlayers = 0;
         Player wonPlayer = null;
-        for (int i = 0; i < players.Count; i++) {
-            if (players[i].lost) {
+        foreach (Player player in players) {
+            player.units.ForEach((unit) => unit.Refresh());
+            player.UpdateUnitCount();
+            if (player.Lost) {
                 lostPlayers++;
             }
             else {
-                wonPlayer = players[i];
+                wonPlayer = player;
             }
         }
         Debug.Log("Lost: " + lostPlayers);
@@ -80,10 +82,10 @@ public class GameController : MonoBehaviour {
             players.Add(new Player());
         }
         Debug.Log(players.Count);
-        turn = 1;
+        //turn = 1;
         currentPlayer = players[0];
-        turnText.text = "Turn: " + turn;
-        playerText.text = "Player: " + + (players.IndexOf(currentPlayer)+1);
+        turnText.text = "Turn: " + currentPlayer.Turn;
+        playerText.text = "Player: " + (players.IndexOf(currentPlayer)+1);
         editMode = false;
         for (int j = 0; j < players.Count; j++) {
             players[j].index = j;
@@ -141,11 +143,6 @@ public class GameController : MonoBehaviour {
                     DoPathfinding();
                 }
             }
-        }
-        for (int i = 0; i < players.Count; i++)
-        {
-            //Debug.Log("Hey player " + i);
-            players[i].UpdateUnitCount();
         }
     }
 

@@ -5,8 +5,26 @@ public class Player
 {
     public int index;
     public List<GameUnit> units;
-    public bool lost = false;
+    bool lost = false;
+
+    public bool Lost
+    {
+        get
+        {
+            return lost;
+        }
+    }
+
     int unitNum;
+    int turn = 1;
+
+    public int Turn
+    {
+        get
+        {
+            return turn;
+        }
+    }
 
     public Player()
     {
@@ -34,12 +52,16 @@ public class Player
         if (units.Count < 1)
         {
             lost = true;
-            Debug.Log("PLayer" + index + " lost...");
+            Debug.Log("Player" + index + " lost...");
             //TODO: Give some feedback indicating the player has lost
         }
         else
         {
             Debug.Log("Remaining Units: " + units.Count);
         }
+    }
+
+    public void NextTurn() {
+        turn++;
     }
 }
