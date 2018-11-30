@@ -79,12 +79,14 @@ public class GameUnit : MonoBehaviour {
 
     public void AttackOrder(GameUnit other, List<HexCell> path) {
         if (!HasAttacked) {
+            Target = other;
             HasAttacked = true;
             if (busy) {
                 //TODO: busy voice clip
             }
             else {
                 StopAllCoroutines();
+                
                 StartCoroutine(AttackMove(other, path));
             }
         }
@@ -118,7 +120,7 @@ public class GameUnit : MonoBehaviour {
     }
 
     void Attack(GameUnit other) {
-        var attack = GetComponent<BasicAttack>();
+        var attack = abilities[0];
         attack.Execute(this);
         
 

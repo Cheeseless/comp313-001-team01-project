@@ -27,7 +27,9 @@ internal class BasicAttack : Ability {
 
     public void Refresh(GameUnit source) { }
 
-    public void Execute(GameUnit source) {
+    public override void Execute(GameUnit source) {
+        //Sets the target of our armor lad
+        defender = source.Target;
         //Sets the damage Modifier to the attack power of hosted game unit.
         damageMod = source.AttackPower;
         //Calculates the damage Causes the selected target to take damage.
@@ -39,6 +41,7 @@ internal class BasicAttack : Ability {
     int DamageCalc() {
         //Damage is done via a min and max random function, with the damage mod being a stagnant modifier to the total damage.
         var damage = Random.Range(minDamage, maxDamage) + damageMod;
+        Debug.Log(damage);
         return damage;
     }
 

@@ -35,6 +35,7 @@ public class GameController : MonoBehaviour {
     public void EndTurn() {
         Debug.Log("Pies");
         turn++;
+        Debug.Log(turn);
         turnText.text = "Turn: " + turn;
         SetNextPlayer();
         playerText.text = "Player: " + (players.IndexOf(currentPlayer)+1);
