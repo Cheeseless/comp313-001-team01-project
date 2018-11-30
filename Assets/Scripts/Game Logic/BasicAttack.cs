@@ -7,13 +7,15 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(GameUnit))]
 internal class BasicAttack : Ability {
 
-    //PublicVariables
+    //PublicVariables//
+
     //Minimum Damage;
     public int minDamage;
     //Maximum Damage;
     public int maxDamage;
     //Damage Modifer;
     int damageMod;
+
     
     
 

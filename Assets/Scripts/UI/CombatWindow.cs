@@ -15,6 +15,7 @@ public class CombatWindow : MonoBehaviour {
     public Text critDetailsTxt;
     public GameObject hitDetails;
     public GameObject critDetails;
+    
 
 	// Use this for initialization
 	void Start () {

@@ -30,7 +30,7 @@ public class GameUnit : MonoBehaviour {
     Health health;
 
     [SerializeField]
-    Ability[] abilities;
+    public Ability[] abilities;
 
     
     

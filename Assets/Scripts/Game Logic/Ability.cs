@@ -3,7 +3,9 @@ using UnityEngine;
 
 public abstract class Ability : ScriptableObject {
 
-    GameUnit defender;
+    public string abilityName;
+
+    public string abilityDesc;
 
     public abstract void Execute(GameUnit other);
 
