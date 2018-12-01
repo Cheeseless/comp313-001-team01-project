@@ -10,46 +10,62 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour {
 
     HexCell currentCell;
-    public HexGrid grid;
-
-    [SerializeField]
-    int numberOfPlayers;
-    List<Player> players;
     Player currentPlayer;
-
-    GameUnit selectedUnit;
-
-    int turn;
-
-    [SerializeField]
-    Text playerText;
-    [SerializeField]
-    Text turnText;
-
-    public GameObject leftPanel;
-    public GameObject rightPanel;
     public GameObject editCheckbox;
 
     public bool editMode;
+    public HexGrid grid;
+
+    public GameObject leftPanel;
+
+    [SerializeField] int numberOfPlayers = 2;
+    List<Player> players;
+
+    [SerializeField] Text playerText;
+    public GameObject rightPanel;
+
+    public AbilityWindow selectedUI;
+
+    GameUnit selectedUnit;
+    //Behaviour halo;
+
+    //int turn;
 
     public void EndTurn() {
-        turn++;
-        turnText.text = "Turn: " + turn;
+        selectedUI.Awake();
         SetNextPlayer();
+        turnText.text = "Turn: " + currentPlayer.Turn;
         playerText.text = "Player: " + (players.IndexOf(currentPlayer)+1);
-        grid.Units.ForEach((x) => x.GameUnit.Refresh());
+        int lostPlayers = 0;
+        Player wonPlayer = null;
+        foreach (Player player in players) {
+            player.units.ForEach((unit) => unit.Refresh());
+            player.UpdateUnitCount();
+            if (player.Lost) {
+                lostPlayers++;
+            }
+            else {
+                wonPlayer = player;
+            }
+        }
+        Debug.Log("Lost: " + lostPlayers);
+        if (lostPlayers == players.Count - 1) {
+            Debug.Log("Player " + wonPlayer.index + " has won.");
+            //TODO: Send the game back to the main menu/restart the level
+        }
     }
 
     void SetNextPlayer() {
-        if (players.IndexOf(currentPlayer) == players.Count-1) {
+        if (players.IndexOf(currentPlayer) == players.Count - 1) {
             currentPlayer = players[0];
-        } else {
+        }
+        else {
             currentPlayer = players[players.IndexOf(currentPlayer) + 1];
         }
     }
 
     public Player GetPlayer(int index) {
-        Debug.Log(players[index]);
+        //Debug.Log(players[index]);
         return players[index];
     }
 
@@ -59,13 +75,30 @@ public class GameController : MonoBehaviour {
 
     void Start() {
         players = new List<Player>();
-        for (var i = 0; i < numberOfPlayers; i++) players.Add(new Player());
+        for (int i = 0; i < numberOfPlayers; i++) {
+            players.Add(new Player());
+        }
         Debug.Log(players.Count);
-        turn = 1;
+        //turn = 1;
         currentPlayer = players[0];
-        turnText.text = "Turn: " + turn;
-        playerText.text = "Player: " + + (players.IndexOf(currentPlayer)+1);
+        turnText.text = "Turn: " + currentPlayer.Turn;
+        playerText.text = "Player: " + (players.IndexOf(currentPlayer)+1);
         editMode = false;
+        for (int j = 0; j < players.Count; j++) {
+            players[j].index = j;
+            if (players[j].units.Count < 1) {
+                var gameObjs = GameObject.FindGameObjectsWithTag("Unit1");
+                foreach (GameObject unitObj in gameObjs) {
+                    GameUnit unit = unitObj.GetComponent<GameUnit>();
+                    Debug.Log(unit.Owner);
+                    if (unit.Owner == j) {
+                        players[j].units.Add(unit);
+                        Debug.Log("Player " + j + " unit added.");
+                    }
+                }
+                players[j].UpdateUnitCount();
+            }
+        }
     }
 
     public void SetEditMode(bool toggle) {
@@ -79,8 +112,7 @@ public class GameController : MonoBehaviour {
             editMode = false;
             leftPanel.SetActive(false);
             rightPanel.SetActive(false);
-            editCheckbox.GetComponent<Toggle>().isOn = true;
-
+            editCheckbox.GetComponent<Toggle>().isOn = false;
         }
         else {
             editMode = true;
@@ -97,13 +129,14 @@ public class GameController : MonoBehaviour {
             }
 
             if (selectedUnit) {
-                Debug.Log(selectedUnit.Owner);
+                //Debug.Log(selectedUnit.Owner);
             }
             if (selectedUnit && GetPlayer(selectedUnit.Owner) == currentPlayer) {
                 if (Input.GetMouseButtonDown(1)) {
                     Debug.Log("Right click");
                     HandleOrder();
-                } else {
+                }
+                else {
                     DoPathfinding();
                 }
             }
@@ -115,8 +148,11 @@ public class GameController : MonoBehaviour {
         Debug.Log("CurrentCell" + currentCell.Position);
         if (grid.HasPath) {
             if (currentCell.Unit) {
-                DoAttack();
-            } else {
+                if (currentCell.Unit != selectedUnit) {
+                    DoAttack();
+                }
+            }
+            else {
                 Debug.Log("Move Order");
                 DoMove();
             }
@@ -126,19 +162,37 @@ public class GameController : MonoBehaviour {
     void DoAttack() {
         if (grid.HasPath) {
             List<HexCell> path = grid.GetPath();
-            if (currentCell) {
-                Debug.Log("Attack Order");
-                selectedUnit.AttackOrder(currentCell.Unit.GameUnit, path);
-            }
+            if (path.Count >=  2)
+                if (currentCell) {
+                    Debug.Log("Attack Order");
+                    selectedUnit.AttackOrder(currentCell.Unit.GameUnit, path);
+                }
+
             grid.ClearPath();
         }
     }
 
     void DoSelection() {
         grid.ClearPath();
+        grid.Units.ForEach((HexUnit obj) => {
+            if(obj.GameUnit.Selected) {
+                obj.GameUnit.ToggleSelection();
+            }
+        });
         UpdateCurrentCell();
         if (currentCell) {
-            selectedUnit = currentCell.Unit.GameUnit;
+            if (currentCell.Unit) {
+                selectedUnit = currentCell.Unit.GameUnit;
+
+                if (selectedUnit.Owner == players.IndexOf(currentPlayer)) {
+                    selectedUI.UnitSelected(selectedUnit);
+                }
+            }
+            else {
+                selectedUnit = null;
+                selectedUI.HideAll();
+            }
+            selectedUnit.ToggleSelection();
         }
     }
 
@@ -146,7 +200,8 @@ public class GameController : MonoBehaviour {
         if (UpdateCurrentCell()) {
             if (currentCell && selectedUnit.HexUnit.IsNotUnderwater(currentCell)) {
                 grid.FindPath(selectedUnit.HexUnit.Location, currentCell, selectedUnit.MovementRange);
-            } else {
+            }
+            else {
                 grid.ClearPath();
             }
         }

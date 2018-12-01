@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/test_scene_gameplay.unity
     guid: c4938b1bc175a9742b1441518846ed33
+  - enabled: 1
+    path: Assets/Scenes/test_scene_redone_ui.unity
+    guid: 8d1178076beb4344397f6f716e636fc5
   m_configObjects: {}

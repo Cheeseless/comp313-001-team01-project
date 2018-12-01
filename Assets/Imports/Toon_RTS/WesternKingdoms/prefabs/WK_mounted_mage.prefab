@@ -4845,6 +4845,7 @@ GameObject:
   - component: {fileID: 223188388882595818}
   - component: {fileID: 114658409048700698}
   - component: {fileID: 114925523573936284}
+  - component: {fileID: 114246219364721050}
   m_Layer: 0
   m_Name: HBCanvas
   m_TagString: Untagged
@@ -4965,6 +4966,17 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114246219364721050
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1142843488309102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 555ef9fd24e5bd64ca170d287ab5de57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114337810506491060
 MonoBehaviour:
   m_ObjectHideFlags: 1

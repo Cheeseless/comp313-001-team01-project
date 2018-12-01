@@ -3,19 +3,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 #endregion
-[RequireComponent(typeof(HexUnit))]
+[RequireComponent(typeof(HexUnit),typeof(Health),typeof(BasicAttack))]
 public class GameUnit : MonoBehaviour {
 
     [SerializeField]
-    int maxHealth;
-    int health;
-    [SerializeField]
-    int damage;
+    int attackPower;
     [SerializeField]
     int movementRange;
 
@@ -24,41 +20,42 @@ public class GameUnit : MonoBehaviour {
     bool hasMoved;
     bool hasAttacked;
     bool busy; //indicates if unit is currently moving or attacking
+    bool selected;
+
+    public bool Selected
+    {
+        get
+        {
+            return selected;
+        }
+    }
+
+    [SerializeField] Material glowMat;
+    Material origMat;
 
     [SerializeField]
     protected int owner;
+    public Animator animator;
 
-    //TODO: 
+    
     [SerializeField]
-    Text hpText;
+    Health health;
+
     [SerializeField]
-    Text dmgText;
-    [SerializeField]
-    Text moveText;
+    public Ability[] abilities;
+
+    
+    
 
     public HexUnit HexUnit {
         get { return hexUnit; }
         set { hexUnit = value; }
     }
-
-    public int Health {
-        get { return health; }
+    
+    public int AttackPower {
+        get { return attackPower; }
         set {
-            health = value;
-            if (health > maxHealth) {
-                health = maxHealth;
-            }
-            UpdateUI();
-            if (health <= 0) {
-                Die();
-            }
-        }
-    }
-    public int Damage {
-        get { return damage; }
-        set {
-            damage = value;
-            UpdateUI();
+            attackPower = value;
         }
     }
     public int MovementRange {
@@ -66,7 +63,6 @@ public class GameUnit : MonoBehaviour {
         set {
             movementRange = value;
             hexUnit.movementRange = value;
-            UpdateUI();
         }
     }
     public bool HasMoved {
@@ -91,15 +87,18 @@ public class GameUnit : MonoBehaviour {
             UpdateOwnerColor();
         }
     }
+    public GameUnit Target { get; set; }
 
     public void AttackOrder(GameUnit other, List<HexCell> path) {
         if (!HasAttacked) {
+            Target = other;
             HasAttacked = true;
             if (busy) {
                 //TODO: busy voice clip
             }
             else {
                 StopAllCoroutines();
+                
                 StartCoroutine(AttackMove(other, path));
             }
         }
@@ -113,7 +112,7 @@ public class GameUnit : MonoBehaviour {
             }
             else {
                 StopAllCoroutines();
-                hexUnit.Travel(path);
+                StartCoroutine(Move(path));
             }
         }
     }
@@ -123,33 +122,74 @@ public class GameUnit : MonoBehaviour {
         hexUnit.Die();
     }
 
+    IEnumerator Move(List<HexCell> path) {
+        SetMoving(true);
+        yield return null;
+        hexUnit.Travel(path);
+        yield return new WaitUntil(() => hexUnit.traveled);
+        SetMoving(false);
+        yield return null;
+    }
     IEnumerator AttackMove(GameUnit other, List<HexCell> path) {
+        SetMoving(true);
+        yield return null;
         hexUnit.TravelMinusOne(path);
         yield return new WaitUntil(() => hexUnit.traveled);
+        SetMoving(false);
+        yield return null;
+        SetAttacking(true);
         Attack(other);
+        yield return new WaitForSeconds(0.4f);
+        SetAttacking(false);
         busy = false;
     }
 
     void Attack(GameUnit other) {
-        other.Health -= Damage;
-        //todo: play animation
+        var attack = abilities[0];
+        attack.Execute(this);
+        
+
+    }
+    public void SetMoving(bool b) {
+        animator.SetBool("Moving", b);
     }
 
-    void UpdateUI() {
-        hpText.text = "HP: " + Health;
-        dmgText.text = "DMG: " + Damage;
-        moveText.text = "MA: " + MovementRange;
+    public void SetAttacking(bool b) {
+        animator.SetBool("Attacking", b);
+    }
+
+
+    public void Damage(int amount) {
+        health.Damage(amount);
     }
 
     void Awake() {
         HexUnit = GetComponent<HexUnit>();
-        health = 999;
     }
 
     void Start() {
         hexUnit.movementRange = MovementRange;
-        health = maxHealth;
-        UpdateUI();
+        origMat = transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material;
+    }
+
+    public void ToggleSelection()
+    {
+        if (selected)
+        {
+            selected = false;
+            transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material = origMat;
+            transform.GetChild(0).GetChild(5).GetComponent<Renderer>().material = origMat;
+            transform.GetChild(0).GetChild(10).GetComponent<Renderer>().material = origMat;
+            transform.GetChild(0).GetChild(20).GetComponent<Renderer>().material = origMat;
+        }
+        else
+        {
+            selected = true;
+            transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material = glowMat;
+            transform.GetChild(0).GetChild(5).GetComponent<Renderer>().material = glowMat;
+            transform.GetChild(0).GetChild(10).GetComponent<Renderer>().material = glowMat;
+            transform.GetChild(0).GetChild(20).GetComponent<Renderer>().material = glowMat;
+        }
     }
 
     public void UpdateOwnerColor() {
@@ -171,21 +211,23 @@ public class GameUnit : MonoBehaviour {
 
     public void Save(BinaryWriter writer) {
         writer.Write(owner);
-        writer.Write(maxHealth);
-        writer.Write(damage);
+        writer.Write(attackPower);
         writer.Write(movementRange);
+        health.Save(writer);
     }
     public void Load(BinaryReader reader) {
         Owner = reader.ReadInt32();
-        maxHealth = reader.ReadInt32();
-        Debug.Log(maxHealth);
-        Health = maxHealth;
-        Damage = reader.ReadInt32();
+        AttackPower = reader.ReadInt32();
         MovementRange = reader.ReadInt32();
+        health.Load(reader);
+
     }
 
     public void Refresh() {
         HasMoved = false;
         HasAttacked = false;
     }
+
+    
+
 }

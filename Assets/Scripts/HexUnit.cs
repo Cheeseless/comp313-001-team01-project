@@ -16,6 +16,7 @@ public class HexUnit : MonoBehaviour {
 
     float orientation;
 
+
     List<HexCell> pathToTravel;
 
     public bool traveled;
@@ -43,7 +44,7 @@ public class HexUnit : MonoBehaviour {
     public GameUnit GameUnit { get; set; }
 
     const float rotationSpeed = 180f;
-    const float travelSpeed = 4f;
+    const float travelSpeed = 4f; //speed at which unit moves along path, nothing to do with movementRange
 
     public static HexUnit unitPrefab;
 
@@ -85,6 +86,7 @@ public class HexUnit : MonoBehaviour {
     }
 
     IEnumerator TravelPath() {
+
         traveled = false;
         Vector3 a, b, c = pathToTravel[0].Position;
         transform.localPosition = c;
@@ -160,7 +162,7 @@ public class HexUnit : MonoBehaviour {
     public static void Load(BinaryReader reader, HexGrid grid) {
         HexCoordinates coordinates = HexCoordinates.Load(reader);
         float orientation = reader.ReadSingle();
-        HexUnit unit = Instantiate(unitPrefab);
+        HexUnit unit = Instantiate(unitPrefab); //TODO: instantiate proper unit type
         unit.GameUnit.Load(reader);
         grid.AddUnit(
             unit, grid.GetCell(coordinates), orientation
@@ -176,28 +178,7 @@ public class HexUnit : MonoBehaviour {
         }
     }
 
-//	void OnDrawGizmos () {
-//		if (pathToTravel == null || pathToTravel.Count == 0) {
-//			return;
-//		}
-//
-//		Vector3 a, b, c = pathToTravel[0].Position;
-//
-//		for (int i = 1; i < pathToTravel.Count; i++) {
-//			a = c;
-//			b = pathToTravel[i - 1].Position;
-//			c = (b + pathToTravel[i].Position) * 0.5f;
-//			for (float t = 0f; t < 1f; t += 0.1f) {
-//				Gizmos.DrawSphere(Bezier.GetPoint(a, b, c, t), 2f);
-//			}
-//		}
-//
-//		a = c;
-//		b = pathToTravel[pathToTravel.Count - 1].Position;
-//		c = b;
-//		for (float t = 0f; t < 1f; t += 0.1f) {
-//			Gizmos.DrawSphere(Bezier.GetPoint(a, b, c, t), 2f);
-//		}
-//	}
+    
+
 
 }

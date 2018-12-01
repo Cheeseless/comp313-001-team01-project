@@ -4,7 +4,7 @@
 //Mountain cannot be passed by any units/abilities
 public enum TileType { NoCost, Field, Forest, Swamp, Water = 99, Mountain };
 
-public class GameCellProperties : MonoBehaviour
+public class GameCellProperties : ScriptableObject
 {
     [SerializeField] TileType movementCost = TileType.Field;
     bool isOnFire;
@@ -49,14 +49,4 @@ public class GameCellProperties : MonoBehaviour
 
     //Can be used for misc. objects contained within the cell
     [SerializeField] GameObject[] containedObjects;
-
-    // Use this for initialization
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
 }
