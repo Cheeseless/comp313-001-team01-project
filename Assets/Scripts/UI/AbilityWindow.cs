@@ -22,8 +22,13 @@ public class AbilityWindow : MonoBehaviour {
         windowUI.SetActive(false);
         buttonUI.SetActive(false);
     }
+
+    public void HideAll() {
+        windowUI.SetActive(false);
+        buttonUI.SetActive(false);
+    }
     //Function for when the Unit is selected.
-    public void unitSelected(GameUnit selected) {
+    public void UnitSelected(GameUnit selected) {
         //Resets the UI when you select a Unit.
         windowUI.SetActive(false);
         //Opens the Buttons when you select a Unit

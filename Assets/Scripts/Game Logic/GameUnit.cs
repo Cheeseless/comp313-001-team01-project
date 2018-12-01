@@ -125,7 +125,10 @@ public class GameUnit : MonoBehaviour {
         yield return new WaitUntil(() => hexUnit.traveled);
         SetMoving(false);
         yield return null;
+        SetAttacking(true);
         Attack(other);
+        yield return new WaitForSeconds(0.4f);
+        SetAttacking(false);
         busy = false;
     }
 

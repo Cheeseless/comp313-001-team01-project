@@ -10,29 +10,26 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour {
 
     HexCell currentCell;
+    Player currentPlayer;
+    public GameObject editCheckbox;
+
+    public bool editMode;
     public HexGrid grid;
 
-    [SerializeField]
-    int numberOfPlayers = 2;
+    public GameObject leftPanel;
+
+    [SerializeField] int numberOfPlayers = 2;
     List<Player> players;
-    Player currentPlayer;
+
+    [SerializeField] Text playerText;
+    public GameObject rightPanel;
+
+    public AbilityWindow selectedUI;
 
     GameUnit selectedUnit;
 
     int turn;
-
-    [SerializeField]
-    Text playerText;
-    [SerializeField]
-    Text turnText;
-
-    public GameObject leftPanel;
-    public GameObject rightPanel;
-    public GameObject editCheckbox;
-
-    public bool editMode;
-
-    public AbilityWindow selectedUI;
+    [SerializeField] Text turnText;
 
     public void EndTurn() {
         Debug.Log("Pies");
@@ -41,14 +38,15 @@ public class GameController : MonoBehaviour {
         turnText.text = "Turn: " + turn;
         selectedUI.Awake();
         SetNextPlayer();
-        playerText.text = "Player: " + (players.IndexOf(currentPlayer)+1);
+        playerText.text = "Player: " + (players.IndexOf(currentPlayer) + 1);
         grid.Units.ForEach((x) => x.GameUnit.Refresh());
     }
 
     void SetNextPlayer() {
-        if (players.IndexOf(currentPlayer) == players.Count-1) {
+        if (players.IndexOf(currentPlayer) == players.Count - 1) {
             currentPlayer = players[0];
-        } else {
+        }
+        else {
             currentPlayer = players[players.IndexOf(currentPlayer) + 1];
         }
     }
@@ -69,7 +67,7 @@ public class GameController : MonoBehaviour {
         turn = 1;
         currentPlayer = players[0];
         turnText.text = "Turn: " + turn;
-        playerText.text = "Player: " + + (players.IndexOf(currentPlayer)+1);
+        playerText.text = "Player: " + +(players.IndexOf(currentPlayer) + 1);
         editMode = false;
     }
 
@@ -84,8 +82,7 @@ public class GameController : MonoBehaviour {
             editMode = false;
             leftPanel.SetActive(false);
             rightPanel.SetActive(false);
-            editCheckbox.GetComponent<Toggle>().isOn = true;
-
+            editCheckbox.GetComponent<Toggle>().isOn = false;
         }
         else {
             editMode = true;
@@ -101,14 +98,15 @@ public class GameController : MonoBehaviour {
                 DoSelection();
             }
 
-            if (selectedUnit) {
-                Debug.Log(selectedUnit.Owner);
-            }
+            //if (selectedUnit) {
+            //    Debug.Log(selectedUnit.Owner);
+            //}
             if (selectedUnit && GetPlayer(selectedUnit.Owner) == currentPlayer) {
                 if (Input.GetMouseButtonDown(1)) {
                     Debug.Log("Right click");
                     HandleOrder();
-                } else {
+                }
+                else {
                     DoPathfinding();
                 }
             }
@@ -120,8 +118,11 @@ public class GameController : MonoBehaviour {
         Debug.Log("CurrentCell" + currentCell.Position);
         if (grid.HasPath) {
             if (currentCell.Unit) {
-                DoAttack();
-            } else {
+                if (currentCell.Unit != selectedUnit) {
+                    DoAttack();
+                }
+            }
+            else {
                 Debug.Log("Move Order");
                 DoMove();
             }
@@ -131,10 +132,12 @@ public class GameController : MonoBehaviour {
     void DoAttack() {
         if (grid.HasPath) {
             List<HexCell> path = grid.GetPath();
-            if (currentCell) {
-                Debug.Log("Attack Order");
-                selectedUnit.AttackOrder(currentCell.Unit.GameUnit, path);
-            }
+            if (path.Count >=  2)
+                if (currentCell) {
+                    Debug.Log("Attack Order");
+                    selectedUnit.AttackOrder(currentCell.Unit.GameUnit, path);
+                }
+
             grid.ClearPath();
         }
     }
@@ -143,9 +146,16 @@ public class GameController : MonoBehaviour {
         grid.ClearPath();
         UpdateCurrentCell();
         if (currentCell) {
-            selectedUnit = currentCell.Unit.GameUnit;
-            if (selectedUnit.Owner == players.IndexOf(currentPlayer)) {
-                selectedUI.unitSelected(selectedUnit);
+            if (currentCell.Unit) {
+                selectedUnit = currentCell.Unit.GameUnit;
+
+                if (selectedUnit.Owner == players.IndexOf(currentPlayer)) {
+                    selectedUI.UnitSelected(selectedUnit);
+                }
+            }
+            else {
+                selectedUnit = null;
+                selectedUI.HideAll();
             }
         }
     }
@@ -154,7 +164,8 @@ public class GameController : MonoBehaviour {
         if (UpdateCurrentCell()) {
             if (currentCell && selectedUnit.HexUnit.IsNotUnderwater(currentCell)) {
                 grid.FindPath(selectedUnit.HexUnit.Location, currentCell, selectedUnit.MovementRange);
-            } else {
+            }
+            else {
                 grid.ClearPath();
             }
         }
