@@ -27,19 +27,32 @@ public class GameController : MonoBehaviour {
     public AbilityWindow selectedUI;
 
     GameUnit selectedUnit;
+    //Behaviour halo;
 
-    int turn;
-    [SerializeField] Text turnText;
+    //int turn;
 
     public void EndTurn() {
-        Debug.Log("Pies");
-        turn++;
-        Debug.Log(turn);
-        turnText.text = "Turn: " + turn;
         selectedUI.Awake();
         SetNextPlayer();
-        playerText.text = "Player: " + (players.IndexOf(currentPlayer) + 1);
-        grid.Units.ForEach((x) => x.GameUnit.Refresh());
+        turnText.text = "Turn: " + currentPlayer.Turn;
+        playerText.text = "Player: " + (players.IndexOf(currentPlayer)+1);
+        int lostPlayers = 0;
+        Player wonPlayer = null;
+        foreach (Player player in players) {
+            player.units.ForEach((unit) => unit.Refresh());
+            player.UpdateUnitCount();
+            if (player.Lost) {
+                lostPlayers++;
+            }
+            else {
+                wonPlayer = player;
+            }
+        }
+        Debug.Log("Lost: " + lostPlayers);
+        if (lostPlayers == players.Count - 1) {
+            Debug.Log("Player " + wonPlayer.index + " has won.");
+            //TODO: Send the game back to the main menu/restart the level
+        }
     }
 
     void SetNextPlayer() {
@@ -52,7 +65,7 @@ public class GameController : MonoBehaviour {
     }
 
     public Player GetPlayer(int index) {
-        Debug.Log(players[index]);
+        //Debug.Log(players[index]);
         return players[index];
     }
 
@@ -62,13 +75,30 @@ public class GameController : MonoBehaviour {
 
     void Start() {
         players = new List<Player>();
-        for (var i = 0; i < numberOfPlayers; i++) players.Add(new Player());
+        for (int i = 0; i < numberOfPlayers; i++) {
+            players.Add(new Player());
+        }
         Debug.Log(players.Count);
-        turn = 1;
+        //turn = 1;
         currentPlayer = players[0];
-        turnText.text = "Turn: " + turn;
-        playerText.text = "Player: " + +(players.IndexOf(currentPlayer) + 1);
+        turnText.text = "Turn: " + currentPlayer.Turn;
+        playerText.text = "Player: " + (players.IndexOf(currentPlayer)+1);
         editMode = false;
+        for (int j = 0; j < players.Count; j++) {
+            players[j].index = j;
+            if (players[j].units.Count < 1) {
+                var gameObjs = GameObject.FindGameObjectsWithTag("Unit1");
+                foreach (GameObject unitObj in gameObjs) {
+                    GameUnit unit = unitObj.GetComponent<GameUnit>();
+                    Debug.Log(unit.Owner);
+                    if (unit.Owner == j) {
+                        players[j].units.Add(unit);
+                        Debug.Log("Player " + j + " unit added.");
+                    }
+                }
+                players[j].UpdateUnitCount();
+            }
+        }
     }
 
     public void SetEditMode(bool toggle) {
@@ -98,9 +128,9 @@ public class GameController : MonoBehaviour {
                 DoSelection();
             }
 
-            //if (selectedUnit) {
-            //    Debug.Log(selectedUnit.Owner);
-            //}
+            if (selectedUnit) {
+                //Debug.Log(selectedUnit.Owner);
+            }
             if (selectedUnit && GetPlayer(selectedUnit.Owner) == currentPlayer) {
                 if (Input.GetMouseButtonDown(1)) {
                     Debug.Log("Right click");
@@ -144,6 +174,11 @@ public class GameController : MonoBehaviour {
 
     void DoSelection() {
         grid.ClearPath();
+        grid.Units.ForEach((HexUnit obj) => {
+            if(obj.GameUnit.Selected) {
+                obj.GameUnit.ToggleSelection();
+            }
+        });
         UpdateCurrentCell();
         if (currentCell) {
             if (currentCell.Unit) {
@@ -157,6 +192,7 @@ public class GameController : MonoBehaviour {
                 selectedUnit = null;
                 selectedUI.HideAll();
             }
+            selectedUnit.ToggleSelection();
         }
     }
 
