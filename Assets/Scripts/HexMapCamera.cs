@@ -39,7 +39,17 @@ public class HexMapCamera : MonoBehaviour {
 		instance = this;
 	}
 
-	void Update () {
+    private void Start()
+    {
+        float xMax = (grid.cellCountX - 0.5f) * (2f * HexMetrics.innerRadius);
+        float zMax = (grid.cellCountZ - 1) * (1.5f * HexMetrics.outerRadius);
+
+        Vector3 position = new Vector3(xMax / 2f, 0f, zMax / 2f);
+        transform.position = position;
+        AdjustZoom(-0.5f);
+    }
+
+    void Update () {
 		float zoomDelta = Input.GetAxis("Mouse ScrollWheel");
 		if (zoomDelta != 0f) {
 			AdjustZoom(zoomDelta);

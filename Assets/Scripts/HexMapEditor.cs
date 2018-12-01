@@ -3,8 +3,6 @@ using UnityEngine.EventSystems;
 
 public class HexMapEditor : MonoBehaviour {
 
-    #region Variables and Properties
-
     int activeElevation;
 
     int activeTerrainTypeIndex;
@@ -21,6 +19,7 @@ public class HexMapEditor : MonoBehaviour {
     HexDirection dragDirection;
 
     public HexGrid hexGrid;
+    public GameController gameController;
 
     bool isDrag;
 
@@ -30,8 +29,6 @@ public class HexMapEditor : MonoBehaviour {
     OptionalToggle riverMode, roadMode, walledMode;
 
     public Material terrainMaterial;
-
-    #endregion
 
     public void SetOwner(int index) {
         owner = index;
@@ -119,7 +116,7 @@ public class HexMapEditor : MonoBehaviour {
     }
 
     void Awake() {
-        terrainMaterial.DisableKeyword("GRID_ON");
+        terrainMaterial.EnableKeyword("GRID_ON");
         SetEditMode(false);
     }
 
@@ -153,8 +150,9 @@ public class HexMapEditor : MonoBehaviour {
     void CreateUnit() {
         HexCell cell = GetCellUnderCursor();
         if (cell && !cell.Unit) {
-            GameUnit unit = (GameUnit) Instantiate(HexUnit.unitPrefab);
-            unit.Owner = owner;
+            GameUnit unit = Instantiate(HexUnit.unitPrefab).GetComponent<GameUnit>();
+            unit.Owner =owner;
+            Debug.Log(unit);
             /*switch (owner) {
                 case 0:
                     unit.GetComponentInChildren<Renderer>().material.color = Color.blue;
@@ -170,7 +168,9 @@ public class HexMapEditor : MonoBehaviour {
                     break;
             }
             */
-            hexGrid.AddUnit(unit, cell, Random.Range(0f, 360f));
+            Debug.Log(unit.HexUnit);
+
+            hexGrid.AddUnit(unit.HexUnit, cell, Random.Range(0f, 360f));
         }
     }
 
