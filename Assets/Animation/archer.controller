@@ -5,7 +5,7 @@ AnimatorController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: infantry
+  m_Name: archer
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Moving
@@ -150,7 +150,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: a7fe718d5d25d4344a2f853639248754, type: 3}
+  m_Motion: {fileID: 7400000, guid: 6fd1af3e492638342942bb3d0f989bf9, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -176,7 +176,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: c8816601e0ec6524480b9dd3562bc890, type: 3}
+  m_Motion: {fileID: 7400000, guid: 8b9d8bb5c100d724fae039a40b8eec1d, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -202,7 +202,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 03ab4d5c9529c2c47b59db31490c8d16, type: 3}
+  m_Motion: {fileID: 7400000, guid: f10f30b792a580a43b19b9f4c10c7860, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
