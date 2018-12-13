@@ -5755,7 +5755,7 @@ Prefab:
     - target: {fileID: 224508759066064264, guid: 55a318e8a5a4c6d4d849e6b047d4ffe0,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0052316296
+      value: 31.43558
       objectReference: {fileID: 0}
     - target: {fileID: 1748741317669476, guid: 55a318e8a5a4c6d4d849e6b047d4ffe0, type: 2}
       propertyPath: m_Name
@@ -5808,7 +5808,7 @@ Prefab:
     - target: {fileID: 114602370010435382, guid: 55a318e8a5a4c6d4d849e6b047d4ffe0,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: Level01
+      value: test_scene_redone_ui
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55a318e8a5a4c6d4d849e6b047d4ffe0, type: 2}

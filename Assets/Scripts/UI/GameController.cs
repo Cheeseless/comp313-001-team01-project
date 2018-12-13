@@ -34,7 +34,7 @@ public class GameController : MonoBehaviour {
     public void EndTurn() {
         selectedUI.Awake();
         SetNextPlayer();
-        turnText.text = "Turn: " + currentPlayer.Turn;
+        //turnText.text = "Turn: " + currentPlayer.Turn;
         playerText.text = "Player: " + (players.IndexOf(currentPlayer)+1);
         int lostPlayers = 0;
         Player wonPlayer = null;
@@ -81,7 +81,7 @@ public class GameController : MonoBehaviour {
         Debug.Log(players.Count);
         //turn = 1;
         currentPlayer = players[0];
-        turnText.text = "Turn: " + currentPlayer.Turn;
+        //turnText.text = "Turn: " + currentPlayer.Turn;
         playerText.text = "Player: " + (players.IndexOf(currentPlayer)+1);
         editMode = false;
         for (int j = 0; j < players.Count; j++) {
